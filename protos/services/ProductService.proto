@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package gRPCTest.Protos.Services;
+
+import "google/protobuf/empty.proto";
+import "models/Product.proto";
+import "common/ServiceStatus.proto";
+
+/* Requests.  */
+
+message ProductByIdRequest
+{
+  int64 product_id = 1;
+}
+
+message ProductPriceRequest
+{
+  double product_price = 1;
+}
+
+/* Responses.  */
+
+message CreateProductResponse
+{
+  gRPCTest.Protos.Models.Product product = 1;
+  ServiceStatus error_status = 2;
+}
+
+message FetchProductResponse
+{
+  gRPCTest.Protos.Models.Product product = 1;
+  ServiceStatus error_status = 2;
+}
+
+message FetchProductsResponse
+{
+  repeated gRPCTest.Protos.Models.Product products = 1;
+  ServiceStatus error_status = 2;
+}
+
+/* Product service.  */
+
+service ProductService
+{
+  rpc CreateProduct (gRPCTest.Protos.Models.Product)
+    returns (CreateProductResponse)
+  { }
+
+  rpc FetchProduct (ProductByIdRequest)
+    returns (FetchProductResponse)
+  { }
+
+  rpc FetchProducts (google.protobuf.Empty)
+    returns (FetchProductsResponse)
+  { }
+
+  rpc FetchProductsByPrice (ProductPriceRequest)
+    returns (FetchProductsResponse)
+  { }
+}

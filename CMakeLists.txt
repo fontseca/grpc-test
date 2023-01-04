@@ -56,6 +56,8 @@ add_executable(
     ${PROTOSDIR}/protobuf/models/InvoiceDetails.pb.cc
     ${PROTOSDIR}/protobuf/services/ClientService.pb.cc
     ${PROTOSDIR}/protobuf/services/ClientService.grpc.pb.cc
+    ${PROTOSDIR}/protobuf/common/ServiceStatus.pb.cc
+    ${PROTOSDIR}/protobuf/common/ServiceStatus.grpc.pb.cc
 )
 
 generate_protobuf(
@@ -71,6 +73,14 @@ generate_protobuf(
   ${PROTOSDIR}/
   ${PROTOSDIR}/protobuf/
     services/ClientService.proto
+    services/ProductService.proto
+    services/InvoiceService.proto
+)
+
+generate_protobuf(
+  ${PROTOSDIR}/
+  ${PROTOSDIR}/protobuf/
+    common/ServiceStatus.proto
 )
 
 target_compile_options(

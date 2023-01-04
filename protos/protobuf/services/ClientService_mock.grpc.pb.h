@@ -17,12 +17,15 @@ class MockClientServiceStub : public ClientService::StubInterface {
   MOCK_METHOD3(CreateClient, ::grpc::Status(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client& request, ::gRPCTest::Protos::Services::CreateClientResponse* response));
   MOCK_METHOD3(AsyncCreateClientRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::CreateClientResponse>*(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client& request, ::grpc::CompletionQueue* cq));
   MOCK_METHOD3(PrepareAsyncCreateClientRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::CreateClientResponse>*(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client& request, ::grpc::CompletionQueue* cq));
-  MOCK_METHOD3(ListClient, ::grpc::Status(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::gRPCTest::Protos::Services::ListClientResponse* response));
-  MOCK_METHOD3(AsyncListClientRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::ListClientResponse>*(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq));
-  MOCK_METHOD3(PrepareAsyncListClientRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::ListClientResponse>*(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq));
-  MOCK_METHOD3(FetchInvoices, ::grpc::Status(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::gRPCTest::Protos::Services::FetchInvoicesResponse* response));
-  MOCK_METHOD3(AsyncFetchInvoicesRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchInvoicesResponse>*(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq));
-  MOCK_METHOD3(PrepareAsyncFetchInvoicesRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchInvoicesResponse>*(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq));
+  MOCK_METHOD3(ListClient, ::grpc::Status(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::gRPCTest::Protos::Services::ListClientResponse* response));
+  MOCK_METHOD3(AsyncListClientRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::ListClientResponse>*(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq));
+  MOCK_METHOD3(PrepareAsyncListClientRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::ListClientResponse>*(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq));
+  MOCK_METHOD3(FetchAllClients, ::grpc::Status(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response));
+  MOCK_METHOD3(AsyncFetchAllClientsRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchAllClientsResponse>*(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq));
+  MOCK_METHOD3(PrepareAsyncFetchAllClientsRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchAllClientsResponse>*(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq));
+  MOCK_METHOD3(FetchClientInvoices, ::grpc::Status(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* response));
+  MOCK_METHOD3(AsyncFetchClientInvoicesRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchClientInvoicesResponse>*(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq));
+  MOCK_METHOD3(PrepareAsyncFetchClientInvoicesRaw, ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchClientInvoicesResponse>*(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq));
 };
 
 } // namespace gRPCTest

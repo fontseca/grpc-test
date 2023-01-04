@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package gRPCTest.Protos.Models;
 
+import "google/protobuf/timestamp.proto";
 import "models/Client.proto";
 
 message Invoice
@@ -10,4 +11,5 @@ message Invoice
   string name = 2;
   string address = 3;
   Client client = 4;
+  google.protobuf.Timestamp created_at = 5;
 }

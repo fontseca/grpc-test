@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package gRPCTest.Protos.Services;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "models/Invoice.proto";
+import "models/InvoiceDetails.proto";
+import "common/ServiceStatus.proto";
+
+/* Requests.  */
+
+message InvoiceByIdRequest
+{
+  int64 invoice_id = 1;
+}
+
+message FetchInvoiceByDateRequest
+{
+  google.protobuf.Timestamp date = 1;
+}
+
+/* Responses.  */
+
+message RegisterInvoiceResponse
+{
+  gRPCTest.Protos.Models.Invoice invoice = 1;
+  ServiceStatus error_status = 2;
+}
+
+message FetchInvoiceByIdResponse
+{
+  gRPCTest.Protos.Models.Invoice invoice = 1;
+  ServiceStatus error_status = 2;
+}
+
+message FetchInvoiceByDateResponse
+{
+  gRPCTest.Protos.Models.Invoice invoice = 1;
+  ServiceStatus error_status = 2;
+}
+
+message FetchInvoiceDetailsResponse
+{
+  gRPCTest.Protos.Models.InvoiceDetails invoice_details = 1;
+  ServiceStatus error_status = 2;
+}
+
+message FetchInvoicesResponse
+{
+  repeated gRPCTest.Protos.Models.Invoice invoices = 1;
+  ServiceStatus error_status = 2;
+}
+
+/* Invoice service. */ 
+
+service InvoiceService
+{
+  rpc RegisterInvoice (gRPCTest.Protos.Models.Invoice)
+    returns (RegisterInvoiceResponse)
+  { }
+
+  rpc FetchInvoiceById (InvoiceByIdRequest)
+    returns (FetchInvoiceByIdResponse)
+  { }
+
+  rpc FetchInvoiceByDate (FetchInvoiceByDateRequest)
+    returns (FetchInvoiceByDateResponse)
+  { }
+
+  rpc FetchInvoiceDetails (InvoiceByIdRequest)
+    returns (FetchInvoiceDetailsResponse)
+  { }
+
+  rpc FetchInvoices (google.protobuf.Empty)
+    returns (FetchInvoicesResponse)
+  { }
+}

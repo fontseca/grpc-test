@@ -26,7 +26,8 @@ namespace Services {
 static const char* ClientService_method_names[] = {
   "/gRPCTest.Protos.Services.ClientService/CreateClient",
   "/gRPCTest.Protos.Services.ClientService/ListClient",
-  "/gRPCTest.Protos.Services.ClientService/FetchInvoices",
+  "/gRPCTest.Protos.Services.ClientService/FetchAllClients",
+  "/gRPCTest.Protos.Services.ClientService/FetchClientInvoices",
 };
 
 std::unique_ptr< ClientService::Stub> ClientService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -38,7 +39,8 @@ std::unique_ptr< ClientService::Stub> ClientService::NewStub(const std::shared_p
 ClientService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_CreateClient_(ClientService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ListClient_(ClientService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_FetchInvoices_(ClientService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_FetchAllClients_(ClientService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_FetchClientInvoices_(ClientService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status ClientService::Stub::CreateClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client& request, ::gRPCTest::Protos::Services::CreateClientResponse* response) {
@@ -64,48 +66,71 @@ void ClientService::Stub::async::CreateClient(::grpc::ClientContext* context, co
   return result;
 }
 
-::grpc::Status ClientService::Stub::ListClient(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::gRPCTest::Protos::Services::ListClientResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::google::protobuf::Empty, ::gRPCTest::Protos::Services::ListClientResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ListClient_, context, request, response);
+::grpc::Status ClientService::Stub::ListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::gRPCTest::Protos::Services::ListClientResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::ListClientResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ListClient_, context, request, response);
 }
 
-void ClientService::Stub::async::ListClient(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::ListClientResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::google::protobuf::Empty, ::gRPCTest::Protos::Services::ListClientResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ListClient_, context, request, response, std::move(f));
+void ClientService::Stub::async::ListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::ListClientResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::ListClientResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ListClient_, context, request, response, std::move(f));
 }
 
-void ClientService::Stub::async::ListClient(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::ListClientResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+void ClientService::Stub::async::ListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::ListClientResponse* response, ::grpc::ClientUnaryReactor* reactor) {
   ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ListClient_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::ListClientResponse>* ClientService::Stub::PrepareAsyncListClientRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::gRPCTest::Protos::Services::ListClientResponse, ::google::protobuf::Empty, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ListClient_, context, request);
+::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::ListClientResponse>* ClientService::Stub::PrepareAsyncListClientRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::gRPCTest::Protos::Services::ListClientResponse, ::gRPCTest::Protos::Services::ClientByIdRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ListClient_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::ListClientResponse>* ClientService::Stub::AsyncListClientRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::ListClientResponse>* ClientService::Stub::AsyncListClientRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncListClientRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status ClientService::Stub::FetchInvoices(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::gRPCTest::Protos::Services::FetchInvoicesResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::google::protobuf::Empty, ::gRPCTest::Protos::Services::FetchInvoicesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_FetchInvoices_, context, request, response);
+::grpc::Status ClientService::Stub::FetchAllClients(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::google::protobuf::Empty, ::gRPCTest::Protos::Services::FetchAllClientsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_FetchAllClients_, context, request, response);
 }
 
-void ClientService::Stub::async::FetchInvoices(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::FetchInvoicesResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::google::protobuf::Empty, ::gRPCTest::Protos::Services::FetchInvoicesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_FetchInvoices_, context, request, response, std::move(f));
+void ClientService::Stub::async::FetchAllClients(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::google::protobuf::Empty, ::gRPCTest::Protos::Services::FetchAllClientsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_FetchAllClients_, context, request, response, std::move(f));
 }
 
-void ClientService::Stub::async::FetchInvoices(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::FetchInvoicesResponse* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_FetchInvoices_, context, request, response, reactor);
+void ClientService::Stub::async::FetchAllClients(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_FetchAllClients_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchInvoicesResponse>* ClientService::Stub::PrepareAsyncFetchInvoicesRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::gRPCTest::Protos::Services::FetchInvoicesResponse, ::google::protobuf::Empty, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_FetchInvoices_, context, request);
+::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchAllClientsResponse>* ClientService::Stub::PrepareAsyncFetchAllClientsRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::gRPCTest::Protos::Services::FetchAllClientsResponse, ::google::protobuf::Empty, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_FetchAllClients_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchInvoicesResponse>* ClientService::Stub::AsyncFetchInvoicesRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchAllClientsResponse>* ClientService::Stub::AsyncFetchAllClientsRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncFetchInvoicesRaw(context, request, cq);
+    this->PrepareAsyncFetchAllClientsRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status ClientService::Stub::FetchClientInvoices(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_FetchClientInvoices_, context, request, response);
+}
+
+void ClientService::Stub::async::FetchClientInvoices(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_FetchClientInvoices_, context, request, response, std::move(f));
+}
+
+void ClientService::Stub::async::FetchClientInvoices(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_FetchClientInvoices_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchClientInvoicesResponse>* ClientService::Stub::PrepareAsyncFetchClientInvoicesRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::gRPCTest::Protos::Services::FetchClientInvoicesResponse, ::gRPCTest::Protos::Services::ClientByIdRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_FetchClientInvoices_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchClientInvoicesResponse>* ClientService::Stub::AsyncFetchClientInvoicesRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncFetchClientInvoicesRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -124,22 +149,32 @@ ClientService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ClientService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ClientService::Service, ::google::protobuf::Empty, ::gRPCTest::Protos::Services::ListClientResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ClientService::Service, ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::ListClientResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ClientService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::google::protobuf::Empty* req,
+             const ::gRPCTest::Protos::Services::ClientByIdRequest* req,
              ::gRPCTest::Protos::Services::ListClientResponse* resp) {
                return service->ListClient(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ClientService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< ClientService::Service, ::google::protobuf::Empty, ::gRPCTest::Protos::Services::FetchInvoicesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< ClientService::Service, ::google::protobuf::Empty, ::gRPCTest::Protos::Services::FetchAllClientsResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](ClientService::Service* service,
              ::grpc::ServerContext* ctx,
              const ::google::protobuf::Empty* req,
-             ::gRPCTest::Protos::Services::FetchInvoicesResponse* resp) {
-               return service->FetchInvoices(ctx, req, resp);
+             ::gRPCTest::Protos::Services::FetchAllClientsResponse* resp) {
+               return service->FetchAllClients(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ClientService_method_names[3],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< ClientService::Service, ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](ClientService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::gRPCTest::Protos::Services::ClientByIdRequest* req,
+             ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* resp) {
+               return service->FetchClientInvoices(ctx, req, resp);
              }, this)));
 }
 
@@ -153,14 +188,21 @@ ClientService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ClientService::Service::ListClient(::grpc::ServerContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::ListClientResponse* response) {
+::grpc::Status ClientService::Service::ListClient(::grpc::ServerContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::ListClientResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status ClientService::Service::FetchInvoices(::grpc::ServerContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::FetchInvoicesResponse* response) {
+::grpc::Status ClientService::Service::FetchAllClients(::grpc::ServerContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ClientService::Service::FetchClientInvoices(::grpc::ServerContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* response) {
   (void) context;
   (void) request;
   (void) response;

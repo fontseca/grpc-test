@@ -41,7 +41,7 @@ namespace gRPCTest::Core::Services
       gRPCTest::Logger::Log(stdout, "listing clients...");
       for (const auto &client : m_clients_data_store)
       {
-        auto grpc_client = response->add_clients();
+        auto grpc_client = response->add_client();
         grpc_client->set_id(client.id);
         grpc_client->set_name(client.name);
         grpc_client->set_phone(client.phone);
@@ -53,7 +53,7 @@ namespace gRPCTest::Core::Services
 
     virtual ::grpc::Status FetchInvoices(::grpc::ServerContext* context,
       const ::google::protobuf::Empty* request,
-        ::gRPCTest::Protos::Services::FetchInvoicesResponse* response)
+        ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* response)
     {
       (void) context;
       (void) request;

@@ -3,4 +3,9 @@
     "CMAKE_INSTALL_PREFIX": "${workspaceFolder}/build/out",
     "CMAKE_TOOLCHAIN_FILE": "${env:VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
   },
+  "protoc": {
+    "options": [
+        "--proto_path=${workspaceRoot}/protos",
+    ],
+},
 }

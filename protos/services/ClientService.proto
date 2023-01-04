@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package gRPCTest.Protos.Services;
+
+import "google/protobuf/empty.proto";
+import "models/Invoice.proto";
+import "models/Client.proto";
+
+message ServiceStatus
+{
+  bool successful = 1;
+  int32 error_code = 2;
+  string error_message = 3;
+}
+
+message CreateClientResponse
+{
+  gRPCTest.Protos.Models.Client client = 1;
+  ServiceStatus error_status = 2;
+}
+
+message ListClientResponse
+{
+  repeated gRPCTest.Protos.Models.Client clients = 1;
+  ServiceStatus error_status = 2;
+}
+
+message FetchInvoicesResponse
+{
+  repeated gRPCTest.Protos.Models.Invoice clients = 1;
+  ServiceStatus error_status = 2;
+}
+
+service ClientService
+{
+  rpc CreateClient (gRPCTest.Protos.Models.Client) returns (CreateClientResponse) { }
+  rpc ListClient (google.protobuf.Empty) returns (ListClientResponse) { }
+  rpc FetchInvoices (google.protobuf.Empty) returns (FetchInvoicesResponse) { }
+}

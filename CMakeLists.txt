@@ -43,22 +43,34 @@ project(
 
 find_package(Protobuf REQUIRED)
 
+find_package(gRPC CONFIG REQUIRED)
+
+find_program(grpc_cpp_plugin_executable grpc_cpp_plugin)
+
 add_executable(
   ${PROJECT_NAME}
     ${SRCDIR}/Entry.cc
-    ${PROTOSDIR}/protobuf/Client.pb.cc
-    ${PROTOSDIR}/protobuf/Invoice.pb.cc
-    ${PROTOSDIR}/protobuf/Product.pb.cc
-    ${PROTOSDIR}/protobuf/InvoiceDetails.pb.cc
+    ${PROTOSDIR}/protobuf/models/Client.pb.cc
+    ${PROTOSDIR}/protobuf/models/Invoice.pb.cc
+    ${PROTOSDIR}/protobuf/models/Product.pb.cc
+    ${PROTOSDIR}/protobuf/models/InvoiceDetails.pb.cc
+    ${PROTOSDIR}/protobuf/services/ClientService.pb.cc
+    ${PROTOSDIR}/protobuf/services/ClientService.grpc.pb.cc
 )
 
 generate_protobuf(
-  ${PROTOSDIR}/models
+  ${PROTOSDIR}/
   ${PROTOSDIR}/protobuf
-    Client.proto
-    Invoice.proto
-    Product.proto
-    InvoiceDetails.proto
+    models/Client.proto
+    models/Invoice.proto
+    models/Product.proto
+    models/InvoiceDetails.proto
+)
+
+generate_protobuf(
+  ${PROTOSDIR}/
+  ${PROTOSDIR}/protobuf/
+    services/ClientService.proto
 )
 
 target_compile_options(
@@ -77,11 +89,15 @@ target_include_directories(
   ${PROJECT_NAME}
     PRIVATE
       ${Protobuf_INCLUDE_DIRS}/
-      ${CMAKE_SOURCE_DIR}/
+      ${CMAKE_SOURCE_DIR}/include/
+      ${CMAKE_SOURCE_DIR}/protos/
+      ${CMAKE_SOURCE_DIR}/protos/protobuf/
 )
 
 target_link_libraries(
   ${PROJECT_NAME}
     PRIVATE
       protobuf::libprotobuf
+      gRPC::grpc++
+      gRPC::grpc++_reflection
 )

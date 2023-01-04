@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package gRCPTest.Protos.Models;
+package gRPCTest.Protos.Models;
 
-import "Client.proto";
+import "models/Client.proto";
 
 message Invoice
 {

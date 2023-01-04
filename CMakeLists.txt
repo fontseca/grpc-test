@@ -46,13 +46,19 @@ find_package(Protobuf REQUIRED)
 add_executable(
   ${PROJECT_NAME}
     ${SRCDIR}/Entry.cc
-    ${PROTOSDIR}/Client.pb.cc
+    ${PROTOSDIR}/protobuf/Client.pb.cc
+    ${PROTOSDIR}/protobuf/Invoice.pb.cc
+    ${PROTOSDIR}/protobuf/Product.pb.cc
+    ${PROTOSDIR}/protobuf/InvoiceDetails.pb.cc
 )
-  
+
 generate_protobuf(
-  ${PROTOSDIR}/
-  ${PROTOSDIR}/
+  ${PROTOSDIR}/models
+  ${PROTOSDIR}/protobuf
     Client.proto
+    Invoice.proto
+    Product.proto
+    InvoiceDetails.proto
 )
 
 target_compile_options(
@@ -70,7 +76,7 @@ target_compile_features(
 target_include_directories(
   ${PROJECT_NAME}
     PRIVATE
-      ${Protobuf_INCLUDE_DIRS}
+      ${Protobuf_INCLUDE_DIRS}/
       ${CMAKE_SOURCE_DIR}/
 )
 

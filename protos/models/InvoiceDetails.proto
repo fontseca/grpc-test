@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package gRCPTest.Protos.Models;
+
+import "Product.proto";
+
+message InvoiceDetails
+{
+  Product product = 1;
+  double discount = 2;
+  int32 amount = 3;
+  double total = 4;
+}

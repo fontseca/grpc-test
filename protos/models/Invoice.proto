@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package gRCPTest.Protos.Models;
+
+import "Client.proto";
+
+message Invoice
+{
+  int64 id = 1;
+  string name = 2;
+  string address = 3;
+  Client client = 4;
+}

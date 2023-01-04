@@ -6,6 +6,6 @@ function(generate_protobuf INCLUDE_PROTO CPP_OUT)
       --cpp_out=${CPP_OUT}
       # --grpc_out=generate_mock_code=true:${CPP_OUT}
         ${ARGN}
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/protos
+    WORKING_DIRECTORY ${PROTOSDIR}/
   )
 endfunction(generate_protobuf)

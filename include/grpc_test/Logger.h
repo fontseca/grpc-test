@@ -18,9 +18,9 @@ namespace gRPCTest
       std::vsprintf(formatted_buffer, format, arguments);
 
 #if defined(unix) || defined(__unix__) || defined(__unix)
-        std::fprintf(stream, "grcp_test: \x1B[32mlogging:\033[0m %s\n", formatted_buffer);
+        std::fprintf(stream, "grpc_test: \x1B[32mlogging:\033[0m %s\n", formatted_buffer);
 #else
-        std::fprintf(stream, "grcp_test: logging: %s\n", formatted_buffer);
+        std::fprintf(stream, "grpc_test: logging: %s\n", formatted_buffer);
 #endif
     }
   };

@@ -531,23 +531,23 @@ class ListClientResponse final :
     kClientFieldNumber = 1,
     kErrorStatusFieldNumber = 2,
   };
-  // repeated .gRPCTest.Protos.Models.Client client = 1;
-  int client_size() const;
+  // .gRPCTest.Protos.Models.Client client = 1;
+  bool has_client() const;
   private:
-  int _internal_client_size() const;
+  bool _internal_has_client() const;
   public:
   void clear_client();
-  ::gRPCTest::Protos::Models::Client* mutable_client(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Client >*
-      mutable_client();
+  const ::gRPCTest::Protos::Models::Client& client() const;
+  PROTOBUF_NODISCARD ::gRPCTest::Protos::Models::Client* release_client();
+  ::gRPCTest::Protos::Models::Client* mutable_client();
+  void set_allocated_client(::gRPCTest::Protos::Models::Client* client);
   private:
-  const ::gRPCTest::Protos::Models::Client& _internal_client(int index) const;
-  ::gRPCTest::Protos::Models::Client* _internal_add_client();
+  const ::gRPCTest::Protos::Models::Client& _internal_client() const;
+  ::gRPCTest::Protos::Models::Client* _internal_mutable_client();
   public:
-  const ::gRPCTest::Protos::Models::Client& client(int index) const;
-  ::gRPCTest::Protos::Models::Client* add_client();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Client >&
-      client() const;
+  void unsafe_arena_set_allocated_client(
+      ::gRPCTest::Protos::Models::Client* client);
+  ::gRPCTest::Protos::Models::Client* unsafe_arena_release_client();
 
   // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
   bool has_error_status() const;
@@ -575,7 +575,7 @@ class ListClientResponse final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Client > client_;
+    ::gRPCTest::Protos::Models::Client* client_;
     ::gRPCTest::Protos::Services::ServiceStatus* error_status_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1145,41 +1145,89 @@ inline void CreateClientResponse::set_allocated_error_status(::gRPCTest::Protos:
 
 // ListClientResponse
 
-// repeated .gRPCTest.Protos.Models.Client client = 1;
-inline int ListClientResponse::_internal_client_size() const {
-  return _impl_.client_.size();
+// .gRPCTest.Protos.Models.Client client = 1;
+inline bool ListClientResponse::_internal_has_client() const {
+  return this != internal_default_instance() && _impl_.client_ != nullptr;
 }
-inline int ListClientResponse::client_size() const {
-  return _internal_client_size();
+inline bool ListClientResponse::has_client() const {
+  return _internal_has_client();
 }
-inline ::gRPCTest::Protos::Models::Client* ListClientResponse::mutable_client(int index) {
-  // @@protoc_insertion_point(field_mutable:gRPCTest.Protos.Services.ListClientResponse.client)
-  return _impl_.client_.Mutable(index);
+inline const ::gRPCTest::Protos::Models::Client& ListClientResponse::_internal_client() const {
+  const ::gRPCTest::Protos::Models::Client* p = _impl_.client_;
+  return p != nullptr ? *p : reinterpret_cast<const ::gRPCTest::Protos::Models::Client&>(
+      ::gRPCTest::Protos::Models::_Client_default_instance_);
 }
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Client >*
-ListClientResponse::mutable_client() {
-  // @@protoc_insertion_point(field_mutable_list:gRPCTest.Protos.Services.ListClientResponse.client)
-  return &_impl_.client_;
-}
-inline const ::gRPCTest::Protos::Models::Client& ListClientResponse::_internal_client(int index) const {
-  return _impl_.client_.Get(index);
-}
-inline const ::gRPCTest::Protos::Models::Client& ListClientResponse::client(int index) const {
+inline const ::gRPCTest::Protos::Models::Client& ListClientResponse::client() const {
   // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.ListClientResponse.client)
-  return _internal_client(index);
+  return _internal_client();
 }
-inline ::gRPCTest::Protos::Models::Client* ListClientResponse::_internal_add_client() {
-  return _impl_.client_.Add();
+inline void ListClientResponse::unsafe_arena_set_allocated_client(
+    ::gRPCTest::Protos::Models::Client* client) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.client_);
+  }
+  _impl_.client_ = client;
+  if (client) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:gRPCTest.Protos.Services.ListClientResponse.client)
 }
-inline ::gRPCTest::Protos::Models::Client* ListClientResponse::add_client() {
-  ::gRPCTest::Protos::Models::Client* _add = _internal_add_client();
-  // @@protoc_insertion_point(field_add:gRPCTest.Protos.Services.ListClientResponse.client)
-  return _add;
+inline ::gRPCTest::Protos::Models::Client* ListClientResponse::release_client() {
+  
+  ::gRPCTest::Protos::Models::Client* temp = _impl_.client_;
+  _impl_.client_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
 }
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Client >&
-ListClientResponse::client() const {
-  // @@protoc_insertion_point(field_list:gRPCTest.Protos.Services.ListClientResponse.client)
+inline ::gRPCTest::Protos::Models::Client* ListClientResponse::unsafe_arena_release_client() {
+  // @@protoc_insertion_point(field_release:gRPCTest.Protos.Services.ListClientResponse.client)
+  
+  ::gRPCTest::Protos::Models::Client* temp = _impl_.client_;
+  _impl_.client_ = nullptr;
+  return temp;
+}
+inline ::gRPCTest::Protos::Models::Client* ListClientResponse::_internal_mutable_client() {
+  
+  if (_impl_.client_ == nullptr) {
+    auto* p = CreateMaybeMessage<::gRPCTest::Protos::Models::Client>(GetArenaForAllocation());
+    _impl_.client_ = p;
+  }
   return _impl_.client_;
+}
+inline ::gRPCTest::Protos::Models::Client* ListClientResponse::mutable_client() {
+  ::gRPCTest::Protos::Models::Client* _msg = _internal_mutable_client();
+  // @@protoc_insertion_point(field_mutable:gRPCTest.Protos.Services.ListClientResponse.client)
+  return _msg;
+}
+inline void ListClientResponse::set_allocated_client(::gRPCTest::Protos::Models::Client* client) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.client_);
+  }
+  if (client) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(client));
+    if (message_arena != submessage_arena) {
+      client = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, client, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.client_ = client;
+  // @@protoc_insertion_point(field_set_allocated:gRPCTest.Protos.Services.ListClientResponse.client)
 }
 
 // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;

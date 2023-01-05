@@ -24,7 +24,7 @@ message CreateClientResponse
 
 message ListClientResponse
 {
-  repeated gRPCTest.Protos.Models.Client client = 1;
+  gRPCTest.Protos.Models.Client client = 1;
   ServiceStatus error_status = 2;
 }
 

@@ -56,6 +56,10 @@ add_executable(
     ${PROTOSDIR}/protobuf/models/InvoiceDetails.pb.cc
     ${PROTOSDIR}/protobuf/services/ClientService.pb.cc
     ${PROTOSDIR}/protobuf/services/ClientService.grpc.pb.cc
+    ${PROTOSDIR}/protobuf/services/InvoiceService.pb.cc
+    ${PROTOSDIR}/protobuf/services/InvoiceService.grpc.pb.cc
+    ${PROTOSDIR}/protobuf/services/ProductService.pb.cc
+    ${PROTOSDIR}/protobuf/services/ProductService.grpc.pb.cc
     ${PROTOSDIR}/protobuf/common/ServiceStatus.pb.cc
     ${PROTOSDIR}/protobuf/common/ServiceStatus.grpc.pb.cc
 )

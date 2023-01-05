@@ -29,19 +29,62 @@ namespace gRPCTest::Core::Services
         .email = request->email()
       };
 
+     auto client_reponse = new gRPCTest::Protos::Models::Client;
+
+      client_reponse->set_id(new_client.id);
+      client_reponse->set_name(new_client.name);
+      client_reponse->set_email(new_client.email);
+      client_reponse->set_phone(new_client.phone);
+
+      response->set_allocated_client(client_reponse);
       m_clients_data_store.push_back( std::move(new_client) );
       response->mutable_error_status()->set_successful(m_clients_data_store.size() > previouse_data_store_size);
-      return ::grpc::Status::OK;
+      return ::grpc::Status(grpc::StatusCode::OK, "Client created");
     }
 
     virtual ::grpc::Status ListClient([[maybe_unused]] ::grpc::ServerContext* context,
-      [[maybe_unused]] const ::google::protobuf::Empty* request,
+      const ::gRPCTest::Protos::Services::ClientByIdRequest* request,
         ::gRPCTest::Protos::Services::ListClientResponse* response)
     {
-      gRPCTest::Logger::Log(stdout, "listing clients...");
+      const std::uint64_t id = request->client_id();
+      gRPCTest::Logger::Log(stdout, "fetching client with id `%lu'...", id);
+
       for (const auto &client : m_clients_data_store)
       {
-        auto grpc_client = response->add_client();
+        if (client.id == id)
+        {
+          auto new_client = new gRPCTest::Protos::Models::Client;
+          new_client->set_id(client.id);
+          new_client->set_name(client.name);
+          new_client->set_phone(client.phone);
+          new_client->set_email(client.email);
+          response->set_allocated_client(new_client);
+          return ::grpc::Status::OK;
+        }
+      }
+
+      return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, "Client was not found.");
+    }
+
+    virtual ::grpc::Status FetchInvoices([[maybe_unused]] ::grpc::ServerContext* context,
+      const ::google::protobuf::Empty* request,
+        ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* response)
+    {
+      (void) context;
+      (void) request;
+      (void) response;
+      return { };
+    }
+  
+    virtual ::grpc::Status FetchAllClients([[maybe_unused]] ::grpc::ServerContext* context,
+      [[maybe_unused]] const ::google::protobuf::Empty* request,
+        ::gRPCTest::Protos::Services::FetchAllClientsResponse* response)
+    {
+      gRPCTest::Logger::Log(stdout, "fetching clients...");
+
+      for (const auto &client : m_clients_data_store)
+      {
+        auto grpc_client = response->add_clients();
         grpc_client->set_id(client.id);
         grpc_client->set_name(client.name);
         grpc_client->set_phone(client.phone);
@@ -51,15 +94,15 @@ namespace gRPCTest::Core::Services
       return ::grpc::Status::OK;
     }
 
-    virtual ::grpc::Status FetchInvoices(::grpc::ServerContext* context,
-      const ::google::protobuf::Empty* request,
+    virtual ::grpc::Status FetchClientInvoices([[maybe_unused]] ::grpc::ServerContext* context,
+      const ::gRPCTest::Protos::Services::ClientByIdRequest* request,
         ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* response)
     {
-      (void) context;
       (void) request;
       (void) response;
-      return { };
+      return ::grpc::Status::OK;
     }
+
   private:
     std::deque<::gRPCTest::Core::Models::Client> m_clients_data_store;
   };

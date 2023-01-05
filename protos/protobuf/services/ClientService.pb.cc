@@ -52,7 +52,7 @@ struct CreateClientResponseDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CreateClientResponseDefaultTypeInternal _CreateClientResponse_default_instance_;
 PROTOBUF_CONSTEXPR ListClientResponse::ListClientResponse(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.client_)*/{}
+    /*decltype(_impl_.client_)*/nullptr
   , /*decltype(_impl_.error_status_)*/nullptr
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ListClientResponseDefaultTypeInternal {
@@ -166,7 +166,7 @@ const char descriptor_table_protodef_services_2fClientService_2eproto[] PROTOBUF
   "gRPCTest.Protos.Models.Client\022=\n\014error_s"
   "tatus\030\002 \001(\0132\'.gRPCTest.Protos.Services.S"
   "erviceStatus\"\203\001\n\022ListClientResponse\022.\n\006c"
-  "lient\030\001 \003(\0132\036.gRPCTest.Protos.Models.Cli"
+  "lient\030\001 \001(\0132\036.gRPCTest.Protos.Models.Cli"
   "ent\022=\n\014error_status\030\002 \001(\0132\'.gRPCTest.Pro"
   "tos.Services.ServiceStatus\"\211\001\n\027FetchAllC"
   "lientsResponse\022/\n\007clients\030\001 \003(\0132\036.gRPCTe"
@@ -647,15 +647,23 @@ void CreateClientResponse::InternalSwap(CreateClientResponse* other) {
 
 class ListClientResponse::_Internal {
  public:
+  static const ::gRPCTest::Protos::Models::Client& client(const ListClientResponse* msg);
   static const ::gRPCTest::Protos::Services::ServiceStatus& error_status(const ListClientResponse* msg);
 };
 
+const ::gRPCTest::Protos::Models::Client&
+ListClientResponse::_Internal::client(const ListClientResponse* msg) {
+  return *msg->_impl_.client_;
+}
 const ::gRPCTest::Protos::Services::ServiceStatus&
 ListClientResponse::_Internal::error_status(const ListClientResponse* msg) {
   return *msg->_impl_.error_status_;
 }
 void ListClientResponse::clear_client() {
-  _impl_.client_.Clear();
+  if (GetArenaForAllocation() == nullptr && _impl_.client_ != nullptr) {
+    delete _impl_.client_;
+  }
+  _impl_.client_ = nullptr;
 }
 void ListClientResponse::clear_error_status() {
   if (GetArenaForAllocation() == nullptr && _impl_.error_status_ != nullptr) {
@@ -673,11 +681,14 @@ ListClientResponse::ListClientResponse(const ListClientResponse& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   ListClientResponse* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.client_){from._impl_.client_}
+      decltype(_impl_.client_){nullptr}
     , decltype(_impl_.error_status_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_client()) {
+    _this->_impl_.client_ = new ::gRPCTest::Protos::Models::Client(*from._impl_.client_);
+  }
   if (from._internal_has_error_status()) {
     _this->_impl_.error_status_ = new ::gRPCTest::Protos::Services::ServiceStatus(*from._impl_.error_status_);
   }
@@ -689,7 +700,7 @@ inline void ListClientResponse::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.client_){arena}
+      decltype(_impl_.client_){nullptr}
     , decltype(_impl_.error_status_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -706,7 +717,7 @@ ListClientResponse::~ListClientResponse() {
 
 inline void ListClientResponse::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.client_.~RepeatedPtrField();
+  if (this != internal_default_instance()) delete _impl_.client_;
   if (this != internal_default_instance()) delete _impl_.error_status_;
 }
 
@@ -720,7 +731,10 @@ void ListClientResponse::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.client_.Clear();
+  if (GetArenaForAllocation() == nullptr && _impl_.client_ != nullptr) {
+    delete _impl_.client_;
+  }
+  _impl_.client_ = nullptr;
   if (GetArenaForAllocation() == nullptr && _impl_.error_status_ != nullptr) {
     delete _impl_.error_status_;
   }
@@ -734,16 +748,11 @@ const char* ListClientResponse::_InternalParse(const char* ptr, ::_pbi::ParseCon
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // repeated .gRPCTest.Protos.Models.Client client = 1;
+      // .gRPCTest.Protos.Models.Client client = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_client(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+          ptr = ctx->ParseMessage(_internal_mutable_client(), ptr);
+          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
@@ -784,12 +793,11 @@ uint8_t* ListClientResponse::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // repeated .gRPCTest.Protos.Models.Client client = 1;
-  for (unsigned i = 0,
-      n = static_cast<unsigned>(this->_internal_client_size()); i < n; i++) {
-    const auto& repfield = this->_internal_client(i);
+  // .gRPCTest.Protos.Models.Client client = 1;
+  if (this->_internal_has_client()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-        InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
+      InternalWriteMessage(1, _Internal::client(this),
+        _Internal::client(this).GetCachedSize(), target, stream);
   }
 
   // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
@@ -815,11 +823,11 @@ size_t ListClientResponse::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .gRPCTest.Protos.Models.Client client = 1;
-  total_size += 1UL * this->_internal_client_size();
-  for (const auto& msg : this->_impl_.client_) {
-    total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  // .gRPCTest.Protos.Models.Client client = 1;
+  if (this->_internal_has_client()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.client_);
   }
 
   // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
@@ -847,7 +855,10 @@ void ListClientResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, con
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  _this->_impl_.client_.MergeFrom(from._impl_.client_);
+  if (from._internal_has_client()) {
+    _this->_internal_mutable_client()->::gRPCTest::Protos::Models::Client::MergeFrom(
+        from._internal_client());
+  }
   if (from._internal_has_error_status()) {
     _this->_internal_mutable_error_status()->::gRPCTest::Protos::Services::ServiceStatus::MergeFrom(
         from._internal_error_status());
@@ -869,8 +880,12 @@ bool ListClientResponse::IsInitialized() const {
 void ListClientResponse::InternalSwap(ListClientResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.client_.InternalSwap(&other->_impl_.client_);
-  swap(_impl_.error_status_, other->_impl_.error_status_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(ListClientResponse, _impl_.error_status_)
+      + sizeof(ListClientResponse::_impl_.error_status_)
+      - PROTOBUF_FIELD_OFFSET(ListClientResponse, _impl_.client_)>(
+          reinterpret_cast<char*>(&_impl_.client_),
+          reinterpret_cast<char*>(&other->_impl_.client_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata ListClientResponse::GetMetadata() const {

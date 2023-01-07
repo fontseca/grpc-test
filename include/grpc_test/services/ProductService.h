@@ -10,12 +10,19 @@
 
 #include "grpc_test/models/Product.h"
 #include "grpc_test/Logger.h"
+#include "grpc_test/Database.h"
 #include "protobuf/services/ProductService.grpc.pb.h"
 
 namespace gRPCTest::Core::Services
 {
   class ProductService final : public ::gRPCTest::Protos::Services::ProductService::Service
   {
+  public:
+    explicit inline ProductService(::gRPCTest::Core::Database &database) noexcept
+      : m_database { database }
+    { }
+
+  private:
     virtual ::grpc::Status CreateProduct([[maybe_unused]] ::grpc::ServerContext* context,
       const ::gRPCTest::Protos::Models::Product* request,
         ::gRPCTest::Protos::Services::CreateProductResponse* response)
@@ -105,6 +112,7 @@ namespace gRPCTest::Core::Services
 
   private:
     std::deque<::gRPCTest::Core::Models::Product> m_products_data_store;
+    ::gRPCTest::Core::Database &m_database;
   };
 }
 

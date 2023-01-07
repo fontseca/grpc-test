@@ -14,4 +14,22 @@ namespace gRPCTest::Core::Models
   };
 }
 
+namespace gRPCTest::Core
+{
+  template <typename T>
+  class RepositoryTraits;
+
+  template <>
+  class RepositoryTraits<Models::Product>
+  {
+  public:
+    static constexpr auto RepositoryName() noexcept
+      -> const char *
+    {
+      return "Product";
+    }
+  };
+}
+
+
 #endif /* PRODUCT_H */

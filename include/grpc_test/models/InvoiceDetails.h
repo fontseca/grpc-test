@@ -16,4 +16,21 @@ namespace gRPCTest::Core::Models
   };
 }
 
+namespace gRPCTest::Core
+{
+  template <typename T>
+  class RepositoryTraits;
+
+  template <>
+  class RepositoryTraits<Models::InvoiceDetails>
+  {
+  public:
+    static constexpr auto RepositoryName() noexcept
+      -> const char *
+    {
+      return "InvoiceDetails";
+    }
+  };
+}
+
 #endif /* INVOICE_DETAILS_H */

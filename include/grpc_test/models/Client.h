@@ -4,14 +4,31 @@
 #include <string>
 #include <cstdint>
 
-namespace gRPCTest::Core::Models
+namespace gRPCTest::Core
 {
-  struct Client
+  namespace Models
   {
-    std::uint64_t id;
-    std::string name;
-    std::string phone;
-    std::string email;
+    struct Client
+    {
+      std::uint64_t id;
+      std::string name;
+      std::string phone;
+      std::string email;
+    };
+  }
+
+  template <typename T>
+  class RepositoryTraits;
+
+  template <>
+  class RepositoryTraits<Models::Client>
+  {
+  public:
+    static constexpr auto RepositoryName() noexcept
+      -> const char *
+    {
+      return "Client";
+    }
   };
 }
 

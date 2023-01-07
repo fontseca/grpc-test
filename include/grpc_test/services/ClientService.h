@@ -10,17 +10,25 @@
 #include "grpc_test/models/Client.h"
 #include "protobuf/services/ClientService.grpc.pb.h"
 #include "grpc_test/Logger.h"
+#include "grpc_test/Repository.h"
 
 namespace gRPCTest::Core::Services
 {
   class ClientService final : public ::gRPCTest::Protos::Services::ClientService::Service
   {
+  public:
+    explicit inline ClientService(::gRPCTest::Core::Database &database) noexcept
+      : m_database { database }
+    { }
+
+  private:
     virtual ::grpc::Status CreateClient([[maybe_unused]] ::grpc::ServerContext* context,
       const ::gRPCTest::Protos::Models::Client* request,
         ::gRPCTest::Protos::Services::CreateClientResponse* response)
     {
       gRPCTest::Logger::Log(stdout, "making a new client...");
-      std::size_t previouse_data_store_size = m_clients_data_store.size();
+      Repository<gRPCTest::Core::Models::Client> repository { m_database };
+      std::size_t previouse_data_store_size = repository.Count();
       gRPCTest::Core::Models::Client new_client
       {
         .id = static_cast<std::uint64_t>(request->id()),
@@ -37,8 +45,10 @@ namespace gRPCTest::Core::Services
       client_reponse->set_phone(new_client.phone);
 
       response->set_allocated_client(client_reponse);
-      m_clients_data_store.push_back( std::move(new_client) );
-      response->mutable_error_status()->set_successful(m_clients_data_store.size() > previouse_data_store_size);
+      response->mutable_error_status()->set_successful(repository.Count() > previouse_data_store_size);
+
+      repository.Insert(new_client);
+
       return ::grpc::Status(grpc::StatusCode::OK, "Client created");
     }
 
@@ -47,20 +57,25 @@ namespace gRPCTest::Core::Services
         ::gRPCTest::Protos::Services::ListClientResponse* response)
     {
       const std::uint64_t id = request->client_id();
-      gRPCTest::Logger::Log(stdout, "fetching client with id `%lu'...", id);
+      ::gRPCTest::Logger::Log(stdout, "fetching client with id `%lu'...", id);
 
-      for (const auto &client : m_clients_data_store)
+      Repository<::gRPCTest::Core::Models::Client> repository { m_database };
+
+      auto result = repository.SelectWhere([&id](const ::gRPCTest::Core::Models::Client &client)
       {
-        if (client.id == id)
-        {
-          auto new_client = new gRPCTest::Protos::Models::Client;
-          new_client->set_id(client.id);
-          new_client->set_name(client.name);
-          new_client->set_phone(client.phone);
-          new_client->set_email(client.email);
-          response->set_allocated_client(new_client);
-          return ::grpc::Status::OK;
-        }
+        return client.id == id;
+      });
+
+      if (result.has_value())
+      {
+        const auto client = result.value();
+        auto new_client = new gRPCTest::Protos::Models::Client;
+        new_client->set_id(client.id);
+        new_client->set_name(client.name);
+        new_client->set_phone(client.phone);
+        new_client->set_email(client.email);
+        response->set_allocated_client(new_client);
+        return ::grpc::Status::OK;
       }
 
       return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, "Client was not found.");
@@ -81,8 +96,11 @@ namespace gRPCTest::Core::Services
         ::gRPCTest::Protos::Services::FetchAllClientsResponse* response)
     {
       gRPCTest::Logger::Log(stdout, "fetching clients...");
+      Repository<gRPCTest::Core::Models::Client> repository { m_database };
 
-      for (const auto &client : m_clients_data_store)
+      auto clients = repository.Select();
+
+      for (const auto &client : clients)
       {
         auto grpc_client = response->add_clients();
         grpc_client->set_id(client.id);
@@ -104,7 +122,7 @@ namespace gRPCTest::Core::Services
     }
 
   private:
-    std::deque<::gRPCTest::Core::Models::Client> m_clients_data_store;
+    ::gRPCTest::Core::Database &m_database;
   };
 }
 

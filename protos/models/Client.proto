@@ -4,7 +4,7 @@ package gRPCTest.Protos.Models;
 
 message Client
 {
-  int64 id = 1;
+  uint64 id = 1;
   string name = 2;
   string phone = 3;
   string email = 4;

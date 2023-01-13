@@ -204,13 +204,13 @@ class ProductByIdRequest final :
   enum : int {
     kProductIdFieldNumber = 1,
   };
-  // int64 product_id = 1;
+  // uint64 product_id = 1;
   void clear_product_id();
-  int64_t product_id() const;
-  void set_product_id(int64_t value);
+  uint64_t product_id() const;
+  void set_product_id(uint64_t value);
   private:
-  int64_t _internal_product_id() const;
-  void _internal_set_product_id(int64_t value);
+  uint64_t _internal_product_id() const;
+  void _internal_set_product_id(uint64_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:gRPCTest.Protos.Services.ProductByIdRequest)
@@ -221,7 +221,7 @@ class ProductByIdRequest final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    int64_t product_id_;
+    uint64_t product_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -917,22 +917,22 @@ class FetchProductsResponse final :
 #endif  // __GNUC__
 // ProductByIdRequest
 
-// int64 product_id = 1;
+// uint64 product_id = 1;
 inline void ProductByIdRequest::clear_product_id() {
-  _impl_.product_id_ = int64_t{0};
+  _impl_.product_id_ = uint64_t{0u};
 }
-inline int64_t ProductByIdRequest::_internal_product_id() const {
+inline uint64_t ProductByIdRequest::_internal_product_id() const {
   return _impl_.product_id_;
 }
-inline int64_t ProductByIdRequest::product_id() const {
+inline uint64_t ProductByIdRequest::product_id() const {
   // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.ProductByIdRequest.product_id)
   return _internal_product_id();
 }
-inline void ProductByIdRequest::_internal_set_product_id(int64_t value) {
+inline void ProductByIdRequest::_internal_set_product_id(uint64_t value) {
   
   _impl_.product_id_ = value;
 }
-inline void ProductByIdRequest::set_product_id(int64_t value) {
+inline void ProductByIdRequest::set_product_id(uint64_t value) {
   _internal_set_product_id(value);
   // @@protoc_insertion_point(field_set:gRPCTest.Protos.Services.ProductByIdRequest.product_id)
 }

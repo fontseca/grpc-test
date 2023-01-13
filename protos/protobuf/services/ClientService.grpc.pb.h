@@ -46,12 +46,12 @@ class ClientService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::CreateClientResponse>> PrepareAsyncCreateClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::CreateClientResponse>>(PrepareAsyncCreateClientRaw(context, request, cq));
     }
-    virtual ::grpc::Status ListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::gRPCTest::Protos::Services::ListClientResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::ListClientResponse>> AsyncListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::ListClientResponse>>(AsyncListClientRaw(context, request, cq));
+    virtual ::grpc::Status FetchClientById(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::gRPCTest::Protos::Services::FetchClientByIdResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchClientByIdResponse>> AsyncFetchClientById(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchClientByIdResponse>>(AsyncFetchClientByIdRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::ListClientResponse>> PrepareAsyncListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::ListClientResponse>>(PrepareAsyncListClientRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchClientByIdResponse>> PrepareAsyncFetchClientById(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchClientByIdResponse>>(PrepareAsyncFetchClientByIdRaw(context, request, cq));
     }
     virtual ::grpc::Status FetchAllClients(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchAllClientsResponse>> AsyncFetchAllClients(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
@@ -72,8 +72,8 @@ class ClientService final {
       virtual ~async_interface() {}
       virtual void CreateClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client* request, ::gRPCTest::Protos::Services::CreateClientResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void CreateClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client* request, ::gRPCTest::Protos::Services::CreateClientResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      virtual void ListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::ListClientResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::ListClientResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void FetchClientById(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientByIdResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void FetchClientById(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientByIdResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void FetchAllClients(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response, std::function<void(::grpc::Status)>) = 0;
       virtual void FetchAllClients(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void FetchClientInvoices(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* response, std::function<void(::grpc::Status)>) = 0;
@@ -85,8 +85,8 @@ class ClientService final {
    private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::CreateClientResponse>* AsyncCreateClientRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::CreateClientResponse>* PrepareAsyncCreateClientRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::ListClientResponse>* AsyncListClientRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::ListClientResponse>* PrepareAsyncListClientRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchClientByIdResponse>* AsyncFetchClientByIdRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchClientByIdResponse>* PrepareAsyncFetchClientByIdRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchAllClientsResponse>* AsyncFetchAllClientsRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchAllClientsResponse>* PrepareAsyncFetchAllClientsRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::gRPCTest::Protos::Services::FetchClientInvoicesResponse>* AsyncFetchClientInvoicesRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) = 0;
@@ -102,12 +102,12 @@ class ClientService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::CreateClientResponse>> PrepareAsyncCreateClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::CreateClientResponse>>(PrepareAsyncCreateClientRaw(context, request, cq));
     }
-    ::grpc::Status ListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::gRPCTest::Protos::Services::ListClientResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::ListClientResponse>> AsyncListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::ListClientResponse>>(AsyncListClientRaw(context, request, cq));
+    ::grpc::Status FetchClientById(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::gRPCTest::Protos::Services::FetchClientByIdResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchClientByIdResponse>> AsyncFetchClientById(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchClientByIdResponse>>(AsyncFetchClientByIdRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::ListClientResponse>> PrepareAsyncListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::ListClientResponse>>(PrepareAsyncListClientRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchClientByIdResponse>> PrepareAsyncFetchClientById(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchClientByIdResponse>>(PrepareAsyncFetchClientByIdRaw(context, request, cq));
     }
     ::grpc::Status FetchAllClients(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchAllClientsResponse>> AsyncFetchAllClients(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) {
@@ -128,8 +128,8 @@ class ClientService final {
      public:
       void CreateClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client* request, ::gRPCTest::Protos::Services::CreateClientResponse* response, std::function<void(::grpc::Status)>) override;
       void CreateClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client* request, ::gRPCTest::Protos::Services::CreateClientResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void ListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::ListClientResponse* response, std::function<void(::grpc::Status)>) override;
-      void ListClient(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::ListClientResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void FetchClientById(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientByIdResponse* response, std::function<void(::grpc::Status)>) override;
+      void FetchClientById(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientByIdResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void FetchAllClients(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response, std::function<void(::grpc::Status)>) override;
       void FetchAllClients(::grpc::ClientContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void FetchClientInvoices(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* response, std::function<void(::grpc::Status)>) override;
@@ -147,14 +147,14 @@ class ClientService final {
     class async async_stub_{this};
     ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::CreateClientResponse>* AsyncCreateClientRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::CreateClientResponse>* PrepareAsyncCreateClientRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Models::Client& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::ListClientResponse>* AsyncListClientRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::ListClientResponse>* PrepareAsyncListClientRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchClientByIdResponse>* AsyncFetchClientByIdRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchClientByIdResponse>* PrepareAsyncFetchClientByIdRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchAllClientsResponse>* AsyncFetchAllClientsRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchAllClientsResponse>* PrepareAsyncFetchAllClientsRaw(::grpc::ClientContext* context, const ::google::protobuf::Empty& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchClientInvoicesResponse>* AsyncFetchClientInvoicesRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::gRPCTest::Protos::Services::FetchClientInvoicesResponse>* PrepareAsyncFetchClientInvoicesRaw(::grpc::ClientContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_CreateClient_;
-    const ::grpc::internal::RpcMethod rpcmethod_ListClient_;
+    const ::grpc::internal::RpcMethod rpcmethod_FetchClientById_;
     const ::grpc::internal::RpcMethod rpcmethod_FetchAllClients_;
     const ::grpc::internal::RpcMethod rpcmethod_FetchClientInvoices_;
   };
@@ -165,7 +165,7 @@ class ClientService final {
     Service();
     virtual ~Service();
     virtual ::grpc::Status CreateClient(::grpc::ServerContext* context, const ::gRPCTest::Protos::Models::Client* request, ::gRPCTest::Protos::Services::CreateClientResponse* response);
-    virtual ::grpc::Status ListClient(::grpc::ServerContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::ListClientResponse* response);
+    virtual ::grpc::Status FetchClientById(::grpc::ServerContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientByIdResponse* response);
     virtual ::grpc::Status FetchAllClients(::grpc::ServerContext* context, const ::google::protobuf::Empty* request, ::gRPCTest::Protos::Services::FetchAllClientsResponse* response);
     virtual ::grpc::Status FetchClientInvoices(::grpc::ServerContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* response);
   };
@@ -190,22 +190,22 @@ class ClientService final {
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_ListClient : public BaseClass {
+  class WithAsyncMethod_FetchClientById : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_ListClient() {
+    WithAsyncMethod_FetchClientById() {
       ::grpc::Service::MarkMethodAsync(1);
     }
-    ~WithAsyncMethod_ListClient() override {
+    ~WithAsyncMethod_FetchClientById() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ListClient(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::ListClientResponse* /*response*/) override {
+    ::grpc::Status FetchClientById(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::FetchClientByIdResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestListClient(::grpc::ServerContext* context, ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::grpc::ServerAsyncResponseWriter< ::gRPCTest::Protos::Services::ListClientResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestFetchClientById(::grpc::ServerContext* context, ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::grpc::ServerAsyncResponseWriter< ::gRPCTest::Protos::Services::FetchClientByIdResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -249,7 +249,7 @@ class ClientService final {
       ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_CreateClient<WithAsyncMethod_ListClient<WithAsyncMethod_FetchAllClients<WithAsyncMethod_FetchClientInvoices<Service > > > > AsyncService;
+  typedef WithAsyncMethod_CreateClient<WithAsyncMethod_FetchClientById<WithAsyncMethod_FetchAllClients<WithAsyncMethod_FetchClientInvoices<Service > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_CreateClient : public BaseClass {
    private:
@@ -278,31 +278,31 @@ class ClientService final {
       ::grpc::CallbackServerContext* /*context*/, const ::gRPCTest::Protos::Models::Client* /*request*/, ::gRPCTest::Protos::Services::CreateClientResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_ListClient : public BaseClass {
+  class WithCallbackMethod_FetchClientById : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_ListClient() {
+    WithCallbackMethod_FetchClientById() {
       ::grpc::Service::MarkMethodCallback(1,
-          new ::grpc::internal::CallbackUnaryHandler< ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::ListClientResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::FetchClientByIdResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::ListClientResponse* response) { return this->ListClient(context, request, response); }));}
-    void SetMessageAllocatorFor_ListClient(
-        ::grpc::MessageAllocator< ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::ListClientResponse>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::gRPCTest::Protos::Services::ClientByIdRequest* request, ::gRPCTest::Protos::Services::FetchClientByIdResponse* response) { return this->FetchClientById(context, request, response); }));}
+    void SetMessageAllocatorFor_FetchClientById(
+        ::grpc::MessageAllocator< ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::FetchClientByIdResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::ListClientResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::FetchClientByIdResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_ListClient() override {
+    ~WithCallbackMethod_FetchClientById() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ListClient(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::ListClientResponse* /*response*/) override {
+    ::grpc::Status FetchClientById(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::FetchClientByIdResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* ListClient(
-      ::grpc::CallbackServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::ListClientResponse* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* FetchClientById(
+      ::grpc::CallbackServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::FetchClientByIdResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithCallbackMethod_FetchAllClients : public BaseClass {
@@ -358,7 +358,7 @@ class ClientService final {
     virtual ::grpc::ServerUnaryReactor* FetchClientInvoices(
       ::grpc::CallbackServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_CreateClient<WithCallbackMethod_ListClient<WithCallbackMethod_FetchAllClients<WithCallbackMethod_FetchClientInvoices<Service > > > > CallbackService;
+  typedef WithCallbackMethod_CreateClient<WithCallbackMethod_FetchClientById<WithCallbackMethod_FetchAllClients<WithCallbackMethod_FetchClientInvoices<Service > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_CreateClient : public BaseClass {
@@ -378,18 +378,18 @@ class ClientService final {
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_ListClient : public BaseClass {
+  class WithGenericMethod_FetchClientById : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_ListClient() {
+    WithGenericMethod_FetchClientById() {
       ::grpc::Service::MarkMethodGeneric(1);
     }
-    ~WithGenericMethod_ListClient() override {
+    ~WithGenericMethod_FetchClientById() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ListClient(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::ListClientResponse* /*response*/) override {
+    ::grpc::Status FetchClientById(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::FetchClientByIdResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -449,22 +449,22 @@ class ClientService final {
     }
   };
   template <class BaseClass>
-  class WithRawMethod_ListClient : public BaseClass {
+  class WithRawMethod_FetchClientById : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_ListClient() {
+    WithRawMethod_FetchClientById() {
       ::grpc::Service::MarkMethodRaw(1);
     }
-    ~WithRawMethod_ListClient() override {
+    ~WithRawMethod_FetchClientById() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ListClient(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::ListClientResponse* /*response*/) override {
+    ::grpc::Status FetchClientById(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::FetchClientByIdResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestListClient(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestFetchClientById(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
@@ -531,25 +531,25 @@ class ClientService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_ListClient : public BaseClass {
+  class WithRawCallbackMethod_FetchClientById : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_ListClient() {
+    WithRawCallbackMethod_FetchClientById() {
       ::grpc::Service::MarkMethodRawCallback(1,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ListClient(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->FetchClientById(context, request, response); }));
     }
-    ~WithRawCallbackMethod_ListClient() override {
+    ~WithRawCallbackMethod_FetchClientById() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ListClient(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::ListClientResponse* /*response*/) override {
+    ::grpc::Status FetchClientById(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::FetchClientByIdResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* ListClient(
+    virtual ::grpc::ServerUnaryReactor* FetchClientById(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -624,31 +624,31 @@ class ClientService final {
     virtual ::grpc::Status StreamedCreateClient(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::gRPCTest::Protos::Models::Client,::gRPCTest::Protos::Services::CreateClientResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_ListClient : public BaseClass {
+  class WithStreamedUnaryMethod_FetchClientById : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_ListClient() {
+    WithStreamedUnaryMethod_FetchClientById() {
       ::grpc::Service::MarkMethodStreamed(1,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::ListClientResponse>(
+          ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::FetchClientByIdResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::ListClientResponse>* streamer) {
-                       return this->StreamedListClient(context,
+                     ::gRPCTest::Protos::Services::ClientByIdRequest, ::gRPCTest::Protos::Services::FetchClientByIdResponse>* streamer) {
+                       return this->StreamedFetchClientById(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_ListClient() override {
+    ~WithStreamedUnaryMethod_FetchClientById() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status ListClient(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::ListClientResponse* /*response*/) override {
+    ::grpc::Status FetchClientById(::grpc::ServerContext* /*context*/, const ::gRPCTest::Protos::Services::ClientByIdRequest* /*request*/, ::gRPCTest::Protos::Services::FetchClientByIdResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedListClient(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::gRPCTest::Protos::Services::ClientByIdRequest,::gRPCTest::Protos::Services::ListClientResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedFetchClientById(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::gRPCTest::Protos::Services::ClientByIdRequest,::gRPCTest::Protos::Services::FetchClientByIdResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
   class WithStreamedUnaryMethod_FetchAllClients : public BaseClass {
@@ -704,9 +704,9 @@ class ClientService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedFetchClientInvoices(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::gRPCTest::Protos::Services::ClientByIdRequest,::gRPCTest::Protos::Services::FetchClientInvoicesResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_CreateClient<WithStreamedUnaryMethod_ListClient<WithStreamedUnaryMethod_FetchAllClients<WithStreamedUnaryMethod_FetchClientInvoices<Service > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_CreateClient<WithStreamedUnaryMethod_FetchClientById<WithStreamedUnaryMethod_FetchAllClients<WithStreamedUnaryMethod_FetchClientInvoices<Service > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_CreateClient<WithStreamedUnaryMethod_ListClient<WithStreamedUnaryMethod_FetchAllClients<WithStreamedUnaryMethod_FetchClientInvoices<Service > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_CreateClient<WithStreamedUnaryMethod_FetchClientById<WithStreamedUnaryMethod_FetchAllClients<WithStreamedUnaryMethod_FetchClientInvoices<Service > > > > StreamedService;
 };
 
 }  // namespace Services

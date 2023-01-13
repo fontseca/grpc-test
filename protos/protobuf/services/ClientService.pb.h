@@ -60,12 +60,12 @@ extern CreateClientResponseDefaultTypeInternal _CreateClientResponse_default_ins
 class FetchAllClientsResponse;
 struct FetchAllClientsResponseDefaultTypeInternal;
 extern FetchAllClientsResponseDefaultTypeInternal _FetchAllClientsResponse_default_instance_;
+class FetchClientByIdResponse;
+struct FetchClientByIdResponseDefaultTypeInternal;
+extern FetchClientByIdResponseDefaultTypeInternal _FetchClientByIdResponse_default_instance_;
 class FetchClientInvoicesResponse;
 struct FetchClientInvoicesResponseDefaultTypeInternal;
 extern FetchClientInvoicesResponseDefaultTypeInternal _FetchClientInvoicesResponse_default_instance_;
-class ListClientResponse;
-struct ListClientResponseDefaultTypeInternal;
-extern ListClientResponseDefaultTypeInternal _ListClientResponse_default_instance_;
 }  // namespace Services
 }  // namespace Protos
 }  // namespace gRPCTest
@@ -73,8 +73,8 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::gRPCTest::Protos::Services::ClientByIdRequest* Arena::CreateMaybeMessage<::gRPCTest::Protos::Services::ClientByIdRequest>(Arena*);
 template<> ::gRPCTest::Protos::Services::CreateClientResponse* Arena::CreateMaybeMessage<::gRPCTest::Protos::Services::CreateClientResponse>(Arena*);
 template<> ::gRPCTest::Protos::Services::FetchAllClientsResponse* Arena::CreateMaybeMessage<::gRPCTest::Protos::Services::FetchAllClientsResponse>(Arena*);
+template<> ::gRPCTest::Protos::Services::FetchClientByIdResponse* Arena::CreateMaybeMessage<::gRPCTest::Protos::Services::FetchClientByIdResponse>(Arena*);
 template<> ::gRPCTest::Protos::Services::FetchClientInvoicesResponse* Arena::CreateMaybeMessage<::gRPCTest::Protos::Services::FetchClientInvoicesResponse>(Arena*);
-template<> ::gRPCTest::Protos::Services::ListClientResponse* Arena::CreateMaybeMessage<::gRPCTest::Protos::Services::ListClientResponse>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace gRPCTest {
 namespace Protos {
@@ -205,13 +205,13 @@ class ClientByIdRequest final :
   enum : int {
     kClientIdFieldNumber = 1,
   };
-  // int64 client_id = 1;
+  // uint64 client_id = 1;
   void clear_client_id();
-  int64_t client_id() const;
-  void set_client_id(int64_t value);
+  uint64_t client_id() const;
+  void set_client_id(uint64_t value);
   private:
-  int64_t _internal_client_id() const;
-  void _internal_set_client_id(int64_t value);
+  uint64_t _internal_client_id() const;
+  void _internal_set_client_id(uint64_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:gRPCTest.Protos.Services.ClientByIdRequest)
@@ -222,7 +222,7 @@ class ClientByIdRequest final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    int64_t client_id_;
+    uint64_t client_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -407,24 +407,24 @@ class CreateClientResponse final :
 };
 // -------------------------------------------------------------------
 
-class ListClientResponse final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:gRPCTest.Protos.Services.ListClientResponse) */ {
+class FetchClientByIdResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:gRPCTest.Protos.Services.FetchClientByIdResponse) */ {
  public:
-  inline ListClientResponse() : ListClientResponse(nullptr) {}
-  ~ListClientResponse() override;
-  explicit PROTOBUF_CONSTEXPR ListClientResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline FetchClientByIdResponse() : FetchClientByIdResponse(nullptr) {}
+  ~FetchClientByIdResponse() override;
+  explicit PROTOBUF_CONSTEXPR FetchClientByIdResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  ListClientResponse(const ListClientResponse& from);
-  ListClientResponse(ListClientResponse&& from) noexcept
-    : ListClientResponse() {
+  FetchClientByIdResponse(const FetchClientByIdResponse& from);
+  FetchClientByIdResponse(FetchClientByIdResponse&& from) noexcept
+    : FetchClientByIdResponse() {
     *this = ::std::move(from);
   }
 
-  inline ListClientResponse& operator=(const ListClientResponse& from) {
+  inline FetchClientByIdResponse& operator=(const FetchClientByIdResponse& from) {
     CopyFrom(from);
     return *this;
   }
-  inline ListClientResponse& operator=(ListClientResponse&& from) noexcept {
+  inline FetchClientByIdResponse& operator=(FetchClientByIdResponse&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -447,20 +447,20 @@ class ListClientResponse final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const ListClientResponse& default_instance() {
+  static const FetchClientByIdResponse& default_instance() {
     return *internal_default_instance();
   }
-  static inline const ListClientResponse* internal_default_instance() {
-    return reinterpret_cast<const ListClientResponse*>(
-               &_ListClientResponse_default_instance_);
+  static inline const FetchClientByIdResponse* internal_default_instance() {
+    return reinterpret_cast<const FetchClientByIdResponse*>(
+               &_FetchClientByIdResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     2;
 
-  friend void swap(ListClientResponse& a, ListClientResponse& b) {
+  friend void swap(FetchClientByIdResponse& a, FetchClientByIdResponse& b) {
     a.Swap(&b);
   }
-  inline void Swap(ListClientResponse* other) {
+  inline void Swap(FetchClientByIdResponse* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -473,7 +473,7 @@ class ListClientResponse final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(ListClientResponse* other) {
+  void UnsafeArenaSwap(FetchClientByIdResponse* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -481,14 +481,14 @@ class ListClientResponse final :
 
   // implements Message ----------------------------------------------
 
-  ListClientResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<ListClientResponse>(arena);
+  FetchClientByIdResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<FetchClientByIdResponse>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const ListClientResponse& from);
+  void CopyFrom(const FetchClientByIdResponse& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const ListClientResponse& from) {
-    ListClientResponse::MergeImpl(*this, from);
+  void MergeFrom( const FetchClientByIdResponse& from) {
+    FetchClientByIdResponse::MergeImpl(*this, from);
   }
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
@@ -506,15 +506,15 @@ class ListClientResponse final :
   void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(ListClientResponse* other);
+  void InternalSwap(FetchClientByIdResponse* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "gRPCTest.Protos.Services.ListClientResponse";
+    return "gRPCTest.Protos.Services.FetchClientByIdResponse";
   }
   protected:
-  explicit ListClientResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit FetchClientByIdResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -567,7 +567,7 @@ class ListClientResponse final :
       ::gRPCTest::Protos::Services::ServiceStatus* error_status);
   ::gRPCTest::Protos::Services::ServiceStatus* unsafe_arena_release_error_status();
 
-  // @@protoc_insertion_point(class_scope:gRPCTest.Protos.Services.ListClientResponse)
+  // @@protoc_insertion_point(class_scope:gRPCTest.Protos.Services.FetchClientByIdResponse)
  private:
   class _Internal;
 
@@ -882,10 +882,11 @@ class FetchClientInvoicesResponse final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kInvoicesFieldNumber = 1,
-    kErrorStatusFieldNumber = 2,
+    kInvoicesFieldNumber = 2,
+    kErrorStatusFieldNumber = 3,
+    kClinetIdFieldNumber = 1,
   };
-  // repeated .gRPCTest.Protos.Models.Invoice invoices = 1;
+  // repeated .gRPCTest.Protos.Models.Invoice invoices = 2;
   int invoices_size() const;
   private:
   int _internal_invoices_size() const;
@@ -903,7 +904,7 @@ class FetchClientInvoicesResponse final :
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Invoice >&
       invoices() const;
 
-  // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
+  // .gRPCTest.Protos.Services.ServiceStatus error_status = 3;
   bool has_error_status() const;
   private:
   bool _internal_has_error_status() const;
@@ -921,6 +922,15 @@ class FetchClientInvoicesResponse final :
       ::gRPCTest::Protos::Services::ServiceStatus* error_status);
   ::gRPCTest::Protos::Services::ServiceStatus* unsafe_arena_release_error_status();
 
+  // uint64 clinet_id = 1;
+  void clear_clinet_id();
+  uint64_t clinet_id() const;
+  void set_clinet_id(uint64_t value);
+  private:
+  uint64_t _internal_clinet_id() const;
+  void _internal_set_clinet_id(uint64_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:gRPCTest.Protos.Services.FetchClientInvoicesResponse)
  private:
   class _Internal;
@@ -931,6 +941,7 @@ class FetchClientInvoicesResponse final :
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Invoice > invoices_;
     ::gRPCTest::Protos::Services::ServiceStatus* error_status_;
+    uint64_t clinet_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -947,22 +958,22 @@ class FetchClientInvoicesResponse final :
 #endif  // __GNUC__
 // ClientByIdRequest
 
-// int64 client_id = 1;
+// uint64 client_id = 1;
 inline void ClientByIdRequest::clear_client_id() {
-  _impl_.client_id_ = int64_t{0};
+  _impl_.client_id_ = uint64_t{0u};
 }
-inline int64_t ClientByIdRequest::_internal_client_id() const {
+inline uint64_t ClientByIdRequest::_internal_client_id() const {
   return _impl_.client_id_;
 }
-inline int64_t ClientByIdRequest::client_id() const {
+inline uint64_t ClientByIdRequest::client_id() const {
   // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.ClientByIdRequest.client_id)
   return _internal_client_id();
 }
-inline void ClientByIdRequest::_internal_set_client_id(int64_t value) {
+inline void ClientByIdRequest::_internal_set_client_id(uint64_t value) {
   
   _impl_.client_id_ = value;
 }
-inline void ClientByIdRequest::set_client_id(int64_t value) {
+inline void ClientByIdRequest::set_client_id(uint64_t value) {
   _internal_set_client_id(value);
   // @@protoc_insertion_point(field_set:gRPCTest.Protos.Services.ClientByIdRequest.client_id)
 }
@@ -1143,25 +1154,25 @@ inline void CreateClientResponse::set_allocated_error_status(::gRPCTest::Protos:
 
 // -------------------------------------------------------------------
 
-// ListClientResponse
+// FetchClientByIdResponse
 
 // .gRPCTest.Protos.Models.Client client = 1;
-inline bool ListClientResponse::_internal_has_client() const {
+inline bool FetchClientByIdResponse::_internal_has_client() const {
   return this != internal_default_instance() && _impl_.client_ != nullptr;
 }
-inline bool ListClientResponse::has_client() const {
+inline bool FetchClientByIdResponse::has_client() const {
   return _internal_has_client();
 }
-inline const ::gRPCTest::Protos::Models::Client& ListClientResponse::_internal_client() const {
+inline const ::gRPCTest::Protos::Models::Client& FetchClientByIdResponse::_internal_client() const {
   const ::gRPCTest::Protos::Models::Client* p = _impl_.client_;
   return p != nullptr ? *p : reinterpret_cast<const ::gRPCTest::Protos::Models::Client&>(
       ::gRPCTest::Protos::Models::_Client_default_instance_);
 }
-inline const ::gRPCTest::Protos::Models::Client& ListClientResponse::client() const {
-  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.ListClientResponse.client)
+inline const ::gRPCTest::Protos::Models::Client& FetchClientByIdResponse::client() const {
+  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.FetchClientByIdResponse.client)
   return _internal_client();
 }
-inline void ListClientResponse::unsafe_arena_set_allocated_client(
+inline void FetchClientByIdResponse::unsafe_arena_set_allocated_client(
     ::gRPCTest::Protos::Models::Client* client) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.client_);
@@ -1172,9 +1183,9 @@ inline void ListClientResponse::unsafe_arena_set_allocated_client(
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:gRPCTest.Protos.Services.ListClientResponse.client)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:gRPCTest.Protos.Services.FetchClientByIdResponse.client)
 }
-inline ::gRPCTest::Protos::Models::Client* ListClientResponse::release_client() {
+inline ::gRPCTest::Protos::Models::Client* FetchClientByIdResponse::release_client() {
   
   ::gRPCTest::Protos::Models::Client* temp = _impl_.client_;
   _impl_.client_ = nullptr;
@@ -1189,14 +1200,14 @@ inline ::gRPCTest::Protos::Models::Client* ListClientResponse::release_client() 
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::gRPCTest::Protos::Models::Client* ListClientResponse::unsafe_arena_release_client() {
-  // @@protoc_insertion_point(field_release:gRPCTest.Protos.Services.ListClientResponse.client)
+inline ::gRPCTest::Protos::Models::Client* FetchClientByIdResponse::unsafe_arena_release_client() {
+  // @@protoc_insertion_point(field_release:gRPCTest.Protos.Services.FetchClientByIdResponse.client)
   
   ::gRPCTest::Protos::Models::Client* temp = _impl_.client_;
   _impl_.client_ = nullptr;
   return temp;
 }
-inline ::gRPCTest::Protos::Models::Client* ListClientResponse::_internal_mutable_client() {
+inline ::gRPCTest::Protos::Models::Client* FetchClientByIdResponse::_internal_mutable_client() {
   
   if (_impl_.client_ == nullptr) {
     auto* p = CreateMaybeMessage<::gRPCTest::Protos::Models::Client>(GetArenaForAllocation());
@@ -1204,12 +1215,12 @@ inline ::gRPCTest::Protos::Models::Client* ListClientResponse::_internal_mutable
   }
   return _impl_.client_;
 }
-inline ::gRPCTest::Protos::Models::Client* ListClientResponse::mutable_client() {
+inline ::gRPCTest::Protos::Models::Client* FetchClientByIdResponse::mutable_client() {
   ::gRPCTest::Protos::Models::Client* _msg = _internal_mutable_client();
-  // @@protoc_insertion_point(field_mutable:gRPCTest.Protos.Services.ListClientResponse.client)
+  // @@protoc_insertion_point(field_mutable:gRPCTest.Protos.Services.FetchClientByIdResponse.client)
   return _msg;
 }
-inline void ListClientResponse::set_allocated_client(::gRPCTest::Protos::Models::Client* client) {
+inline void FetchClientByIdResponse::set_allocated_client(::gRPCTest::Protos::Models::Client* client) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.client_);
@@ -1227,26 +1238,26 @@ inline void ListClientResponse::set_allocated_client(::gRPCTest::Protos::Models:
     
   }
   _impl_.client_ = client;
-  // @@protoc_insertion_point(field_set_allocated:gRPCTest.Protos.Services.ListClientResponse.client)
+  // @@protoc_insertion_point(field_set_allocated:gRPCTest.Protos.Services.FetchClientByIdResponse.client)
 }
 
 // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
-inline bool ListClientResponse::_internal_has_error_status() const {
+inline bool FetchClientByIdResponse::_internal_has_error_status() const {
   return this != internal_default_instance() && _impl_.error_status_ != nullptr;
 }
-inline bool ListClientResponse::has_error_status() const {
+inline bool FetchClientByIdResponse::has_error_status() const {
   return _internal_has_error_status();
 }
-inline const ::gRPCTest::Protos::Services::ServiceStatus& ListClientResponse::_internal_error_status() const {
+inline const ::gRPCTest::Protos::Services::ServiceStatus& FetchClientByIdResponse::_internal_error_status() const {
   const ::gRPCTest::Protos::Services::ServiceStatus* p = _impl_.error_status_;
   return p != nullptr ? *p : reinterpret_cast<const ::gRPCTest::Protos::Services::ServiceStatus&>(
       ::gRPCTest::Protos::Services::_ServiceStatus_default_instance_);
 }
-inline const ::gRPCTest::Protos::Services::ServiceStatus& ListClientResponse::error_status() const {
-  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.ListClientResponse.error_status)
+inline const ::gRPCTest::Protos::Services::ServiceStatus& FetchClientByIdResponse::error_status() const {
+  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.FetchClientByIdResponse.error_status)
   return _internal_error_status();
 }
-inline void ListClientResponse::unsafe_arena_set_allocated_error_status(
+inline void FetchClientByIdResponse::unsafe_arena_set_allocated_error_status(
     ::gRPCTest::Protos::Services::ServiceStatus* error_status) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.error_status_);
@@ -1257,9 +1268,9 @@ inline void ListClientResponse::unsafe_arena_set_allocated_error_status(
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:gRPCTest.Protos.Services.ListClientResponse.error_status)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:gRPCTest.Protos.Services.FetchClientByIdResponse.error_status)
 }
-inline ::gRPCTest::Protos::Services::ServiceStatus* ListClientResponse::release_error_status() {
+inline ::gRPCTest::Protos::Services::ServiceStatus* FetchClientByIdResponse::release_error_status() {
   
   ::gRPCTest::Protos::Services::ServiceStatus* temp = _impl_.error_status_;
   _impl_.error_status_ = nullptr;
@@ -1274,14 +1285,14 @@ inline ::gRPCTest::Protos::Services::ServiceStatus* ListClientResponse::release_
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::gRPCTest::Protos::Services::ServiceStatus* ListClientResponse::unsafe_arena_release_error_status() {
-  // @@protoc_insertion_point(field_release:gRPCTest.Protos.Services.ListClientResponse.error_status)
+inline ::gRPCTest::Protos::Services::ServiceStatus* FetchClientByIdResponse::unsafe_arena_release_error_status() {
+  // @@protoc_insertion_point(field_release:gRPCTest.Protos.Services.FetchClientByIdResponse.error_status)
   
   ::gRPCTest::Protos::Services::ServiceStatus* temp = _impl_.error_status_;
   _impl_.error_status_ = nullptr;
   return temp;
 }
-inline ::gRPCTest::Protos::Services::ServiceStatus* ListClientResponse::_internal_mutable_error_status() {
+inline ::gRPCTest::Protos::Services::ServiceStatus* FetchClientByIdResponse::_internal_mutable_error_status() {
   
   if (_impl_.error_status_ == nullptr) {
     auto* p = CreateMaybeMessage<::gRPCTest::Protos::Services::ServiceStatus>(GetArenaForAllocation());
@@ -1289,12 +1300,12 @@ inline ::gRPCTest::Protos::Services::ServiceStatus* ListClientResponse::_interna
   }
   return _impl_.error_status_;
 }
-inline ::gRPCTest::Protos::Services::ServiceStatus* ListClientResponse::mutable_error_status() {
+inline ::gRPCTest::Protos::Services::ServiceStatus* FetchClientByIdResponse::mutable_error_status() {
   ::gRPCTest::Protos::Services::ServiceStatus* _msg = _internal_mutable_error_status();
-  // @@protoc_insertion_point(field_mutable:gRPCTest.Protos.Services.ListClientResponse.error_status)
+  // @@protoc_insertion_point(field_mutable:gRPCTest.Protos.Services.FetchClientByIdResponse.error_status)
   return _msg;
 }
-inline void ListClientResponse::set_allocated_error_status(::gRPCTest::Protos::Services::ServiceStatus* error_status) {
+inline void FetchClientByIdResponse::set_allocated_error_status(::gRPCTest::Protos::Services::ServiceStatus* error_status) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.error_status_);
@@ -1312,7 +1323,7 @@ inline void ListClientResponse::set_allocated_error_status(::gRPCTest::Protos::S
     
   }
   _impl_.error_status_ = error_status;
-  // @@protoc_insertion_point(field_set_allocated:gRPCTest.Protos.Services.ListClientResponse.error_status)
+  // @@protoc_insertion_point(field_set_allocated:gRPCTest.Protos.Services.FetchClientByIdResponse.error_status)
 }
 
 // -------------------------------------------------------------------
@@ -1445,7 +1456,27 @@ inline void FetchAllClientsResponse::set_allocated_error_status(::gRPCTest::Prot
 
 // FetchClientInvoicesResponse
 
-// repeated .gRPCTest.Protos.Models.Invoice invoices = 1;
+// uint64 clinet_id = 1;
+inline void FetchClientInvoicesResponse::clear_clinet_id() {
+  _impl_.clinet_id_ = uint64_t{0u};
+}
+inline uint64_t FetchClientInvoicesResponse::_internal_clinet_id() const {
+  return _impl_.clinet_id_;
+}
+inline uint64_t FetchClientInvoicesResponse::clinet_id() const {
+  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.FetchClientInvoicesResponse.clinet_id)
+  return _internal_clinet_id();
+}
+inline void FetchClientInvoicesResponse::_internal_set_clinet_id(uint64_t value) {
+  
+  _impl_.clinet_id_ = value;
+}
+inline void FetchClientInvoicesResponse::set_clinet_id(uint64_t value) {
+  _internal_set_clinet_id(value);
+  // @@protoc_insertion_point(field_set:gRPCTest.Protos.Services.FetchClientInvoicesResponse.clinet_id)
+}
+
+// repeated .gRPCTest.Protos.Models.Invoice invoices = 2;
 inline int FetchClientInvoicesResponse::_internal_invoices_size() const {
   return _impl_.invoices_.size();
 }
@@ -1482,7 +1513,7 @@ FetchClientInvoicesResponse::invoices() const {
   return _impl_.invoices_;
 }
 
-// .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
+// .gRPCTest.Protos.Services.ServiceStatus error_status = 3;
 inline bool FetchClientInvoicesResponse::_internal_has_error_status() const {
   return this != internal_default_instance() && _impl_.error_status_ != nullptr;
 }

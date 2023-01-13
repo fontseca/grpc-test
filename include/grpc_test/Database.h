@@ -1,63 +1,45 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <string_view>
 #include <list>
 #include <memory>
-#include <optional>
+#include <algorithm>
 
-#include "grpc_test/Table.h"
+#include "grpc_test/Repository.h"
 
 namespace gRPCTest::Core
 {
   class Database
   {
   public:
+    /* Adds a new repository to the database.  */
     template <typename T>
-    void RegisterTable(const std::string_view table_name) noexcept
+    void RegisterRepository() noexcept
     {
-      auto table = std::make_unique<::gRPCTest::Core::Table<T>>(table_name);
-      m_tables.push_back(std::move(table));
+      m_repositories.push_back(MakeRepository<T>());
     }
 
+    /* Gets a reference to the `T' repository.  */
     template <typename T>
-    [[nodiscard]] auto Table(const std::string_view table_name) noexcept
-      -> std::optional<Table<T> *>
+    [[nodiscard]]
+    auto Repository() noexcept
+      -> std::shared_ptr<::gRPCTest::Core::Repository<T>>
     {
-      for (auto &table : m_tables)
-      {
-        if (table_name == table->Name())
-        {
-          return dynamic_cast<::gRPCTest::Core::Table<T> *>(table.get());
-        }
-      }
+      const auto result = std::find_if(
+        std::cbegin(m_repositories),
+          std::cend(m_repositories),
+            [](const decltype(m_repositories)::value_type &repository)
+            {
+              return repository->Name()
+                == ::gRPCTest::Core::Repository<T>::RepositoryName;
+            });
 
-      return std::nullopt;
+      return result == m_repositories.cend()
+        ? std::dynamic_pointer_cast<::gRPCTest::Core::Repository<T>>(*result)
+          : nullptr;
     }
-
-    [[nodiscard]] auto Count(const std::string_view table_name) noexcept
-      -> std::size_t
-    {
-      for (const auto &table : m_tables)
-      {
-        if (table_name == table->Name())
-        {
-          return table->Count();
-        }
-      }
-
-      return 0;
-    }
-
-    template <typename T>
-    [[nodiscard]] auto SelectFromTable(const std::string_view table_name) noexcept
-      -> const std::list<T> &
-    {
-      return Table<T>(table_name).value()->Select();
-    }
-
   private:
-    std::list<std::unique_ptr<gRPCTest::Core::ITable>> m_tables;
+    std::list<std::shared_ptr<IRepository>> m_repositories;
   };
 }
 

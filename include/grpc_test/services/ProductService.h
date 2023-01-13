@@ -28,7 +28,9 @@ namespace gRPCTest::Core::Services
         ::gRPCTest::Protos::Services::CreateProductResponse* response)
     {
       gRPCTest::Logger::Log(stdout, "making a new product...");
-      std::size_t previouse_data_store_size = m_products_data_store.size();
+
+      auto repository = m_database.Repository<::gRPCTest::Core::Models::Product>();
+      const std::size_t previouse_data_store_size = repository->Size();
 
       gRPCTest::Core::Models::Product new_product
       {
@@ -44,9 +46,18 @@ namespace gRPCTest::Core::Services
       product_response->set_price(new_product.price);
 
       response->set_allocated_product(product_response);
-      m_products_data_store.push_back( std::move(new_product) );
-      response->mutable_error_status()->set_successful(m_products_data_store.size() > previouse_data_store_size);
-      return ::grpc::Status(grpc::StatusCode::OK, "Product created");
+      repository->InsertOne(new_product);
+
+      if (repository->Size() > previouse_data_store_size)
+      {
+        response->mutable_error_status()->set_successful(true);
+        return ::grpc::Status(grpc::StatusCode::OK, "Product created");
+      }
+
+      response->mutable_error_status()->set_successful(true);
+      response->mutable_error_status()->set_error_code(500);
+      response->mutable_error_status()->set_error_message("Product was not created");
+      return ::grpc::Status(grpc::StatusCode::INTERNAL, "Product was not created");
     }
 
     virtual ::grpc::Status FetchProduct([[maybe_unused]] ::grpc::ServerContext* context,
@@ -56,17 +67,23 @@ namespace gRPCTest::Core::Services
       const std::uint64_t id = request->product_id();
       gRPCTest::Logger::Log(stdout, "fetching product with id `%lu'...", id);
 
-      for (const auto &product : m_products_data_store)
+      auto repository = m_database.Repository<::gRPCTest::Core::Models::Product>();
+
+      const auto query = repository->Find(
+        [&id](const ::gRPCTest::Core::Models::Product &product)
       {
-        if (product.id == id)
-        {
-          auto new_product = new gRPCTest::Protos::Models::Product;
-          new_product->set_id(product.id);
-          new_product->set_name(product.name);
-          new_product->set_price(product.price);
-          response->set_allocated_product(new_product);
-          return ::grpc::Status::OK;
-        }
+        return product.id == id;
+      });
+      
+      if (query)
+      {
+        const auto product = query.value();
+        auto new_product = new gRPCTest::Protos::Models::Product;
+        new_product->set_id(product.id);
+        new_product->set_name(product.name);
+        new_product->set_price(product.price);
+        response->set_allocated_product(new_product);
+        return ::grpc::Status::OK;
       }
 
       return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, "Product was not found.");
@@ -76,9 +93,12 @@ namespace gRPCTest::Core::Services
       [[maybe_unused]] const ::google::protobuf::Empty* request,
         ::gRPCTest::Protos::Services::FetchProductsResponse* response)
     {
+      using namespace ::gRPCTest::Core;
+
      gRPCTest::Logger::Log(stdout, "fetching products...");
 
-      for (const auto &product : m_products_data_store)
+      for (const auto &product
+        : m_database.Repository<Models::Product>()->SelectAll())
       {
         auto grpc_product = response->add_products();
         grpc_product->set_id(product.id);
@@ -96,7 +116,8 @@ namespace gRPCTest::Core::Services
       const double price = request->product_price();
       gRPCTest::Logger::Log(stdout, "fetching product whose price is >= %f...", price);
 
-      for (const auto &product : m_products_data_store)
+      for (const auto &product
+        : m_database.Repository<::gRPCTest::Core::Models::Product>()->SelectAll())
       {
         if (product.price >= price)
         {
@@ -111,7 +132,6 @@ namespace gRPCTest::Core::Services
     }
 
   private:
-    std::deque<::gRPCTest::Core::Models::Product> m_products_data_store;
     ::gRPCTest::Core::Database &m_database;
   };
 }

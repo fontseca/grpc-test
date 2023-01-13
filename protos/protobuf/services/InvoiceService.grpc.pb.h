@@ -29,7 +29,7 @@ namespace gRPCTest {
 namespace Protos {
 namespace Services {
 
-// Invoice service. 
+// Invoice service.  
 //
 class InvoiceService final {
  public:

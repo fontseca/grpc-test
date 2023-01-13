@@ -25,7 +25,7 @@ namespace Protos {
 namespace Services {
 PROTOBUF_CONSTEXPR InvoiceByIdRequest::InvoiceByIdRequest(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.invoice_id_)*/int64_t{0}
+    /*decltype(_impl_.invoice_id_)*/uint64_t{0u}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct InvoiceByIdRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR InvoiceByIdRequestDefaultTypeInternal()
@@ -79,7 +79,7 @@ struct FetchInvoiceByIdResponseDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 FetchInvoiceByIdResponseDefaultTypeInternal _FetchInvoiceByIdResponse_default_instance_;
 PROTOBUF_CONSTEXPR FetchInvoiceByDateResponse::FetchInvoiceByDateResponse(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.invoice_)*/nullptr
+    /*decltype(_impl_.invoices_)*/{}
   , /*decltype(_impl_.error_status_)*/nullptr
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct FetchInvoiceByDateResponseDefaultTypeInternal {
@@ -95,6 +95,7 @@ PROTOBUF_CONSTEXPR FetchInvoiceDetailsResponse::FetchInvoiceDetailsResponse(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.invoice_details_)*/nullptr
   , /*decltype(_impl_.error_status_)*/nullptr
+  , /*decltype(_impl_.invoice_id_)*/uint64_t{0u}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct FetchInvoiceDetailsResponseDefaultTypeInternal {
   PROTOBUF_CONSTEXPR FetchInvoiceDetailsResponseDefaultTypeInternal()
@@ -163,7 +164,7 @@ const uint32_t TableStruct_services_2fInvoiceService_2eproto::offsets[] PROTOBUF
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Services::FetchInvoiceByDateResponse, _impl_.invoice_),
+  PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Services::FetchInvoiceByDateResponse, _impl_.invoices_),
   PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Services::FetchInvoiceByDateResponse, _impl_.error_status_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Services::FetchInvoiceDetailsResponse, _internal_metadata_),
@@ -171,6 +172,7 @@ const uint32_t TableStruct_services_2fInvoiceService_2eproto::offsets[] PROTOBUF
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Services::FetchInvoiceDetailsResponse, _impl_.invoice_id_),
   PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Services::FetchInvoiceDetailsResponse, _impl_.invoice_details_),
   PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Services::FetchInvoiceDetailsResponse, _impl_.error_status_),
   ~0u,  // no _has_bits_
@@ -189,7 +191,7 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 22, -1, -1, sizeof(::gRPCTest::Protos::Services::FetchInvoiceByIdResponse)},
   { 30, -1, -1, sizeof(::gRPCTest::Protos::Services::FetchInvoiceByDateResponse)},
   { 38, -1, -1, sizeof(::gRPCTest::Protos::Services::FetchInvoiceDetailsResponse)},
-  { 46, -1, -1, sizeof(::gRPCTest::Protos::Services::FetchInvoicesResponse)},
+  { 47, -1, -1, sizeof(::gRPCTest::Protos::Services::FetchInvoicesResponse)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -208,7 +210,7 @@ const char descriptor_table_protodef_services_2fInvoiceService_2eproto[] PROTOBU
   "tamp.proto\032\033google/protobuf/empty.proto\032"
   "\024models/Invoice.proto\032\033models/InvoiceDet"
   "ails.proto\032\032common/ServiceStatus.proto\"("
-  "\n\022InvoiceByIdRequest\022\022\n\ninvoice_id\030\001 \001(\003"
+  "\n\022InvoiceByIdRequest\022\022\n\ninvoice_id\030\001 \001(\004"
   "\"E\n\031FetchInvoiceByDateRequest\022(\n\004date\030\001 "
   "\001(\0132\032.google.protobuf.Timestamp\"\212\001\n\027Regi"
   "sterInvoiceResponse\0220\n\007invoice\030\001 \001(\0132\037.g"
@@ -217,33 +219,34 @@ const char descriptor_table_protodef_services_2fInvoiceService_2eproto[] PROTOBU
   "erviceStatus\"\213\001\n\030FetchInvoiceByIdRespons"
   "e\0220\n\007invoice\030\001 \001(\0132\037.gRPCTest.Protos.Mod"
   "els.Invoice\022=\n\014error_status\030\002 \001(\0132\'.gRPC"
-  "Test.Protos.Services.ServiceStatus\"\215\001\n\032F"
-  "etchInvoiceByDateResponse\0220\n\007invoice\030\001 \001"
-  "(\0132\037.gRPCTest.Protos.Models.Invoice\022=\n\014e"
-  "rror_status\030\002 \001(\0132\'.gRPCTest.Protos.Serv"
-  "ices.ServiceStatus\"\235\001\n\033FetchInvoiceDetai"
-  "lsResponse\022\?\n\017invoice_details\030\001 \001(\0132&.gR"
-  "PCTest.Protos.Models.InvoiceDetails\022=\n\014e"
-  "rror_status\030\002 \001(\0132\'.gRPCTest.Protos.Serv"
-  "ices.ServiceStatus\"\211\001\n\025FetchInvoicesResp"
-  "onse\0221\n\010invoices\030\001 \003(\0132\037.gRPCTest.Protos"
-  ".Models.Invoice\022=\n\014error_status\030\002 \001(\0132\'."
-  "gRPCTest.Protos.Services.ServiceStatus2\317"
-  "\004\n\016InvoiceService\022g\n\017RegisterInvoice\022\037.g"
-  "RPCTest.Protos.Models.Invoice\0321.gRPCTest"
-  ".Protos.Services.RegisterInvoiceResponse"
-  "\"\000\022v\n\020FetchInvoiceById\022,.gRPCTest.Protos"
-  ".Services.InvoiceByIdRequest\0322.gRPCTest."
-  "Protos.Services.FetchInvoiceByIdResponse"
-  "\"\000\022\201\001\n\022FetchInvoiceByDate\0223.gRPCTest.Pro"
-  "tos.Services.FetchInvoiceByDateRequest\0324"
-  ".gRPCTest.Protos.Services.FetchInvoiceBy"
-  "DateResponse\"\000\022|\n\023FetchInvoiceDetails\022,."
-  "gRPCTest.Protos.Services.InvoiceByIdRequ"
-  "est\0325.gRPCTest.Protos.Services.FetchInvo"
-  "iceDetailsResponse\"\000\022Z\n\rFetchInvoices\022\026."
-  "google.protobuf.Empty\032/.gRPCTest.Protos."
-  "Services.FetchInvoicesResponse\"\000b\006proto3"
+  "Test.Protos.Services.ServiceStatus\"\216\001\n\032F"
+  "etchInvoiceByDateResponse\0221\n\010invoices\030\001 "
+  "\003(\0132\037.gRPCTest.Protos.Models.Invoice\022=\n\014"
+  "error_status\030\002 \001(\0132\'.gRPCTest.Protos.Ser"
+  "vices.ServiceStatus\"\261\001\n\033FetchInvoiceDeta"
+  "ilsResponse\022\022\n\ninvoice_id\030\001 \001(\004\022\?\n\017invoi"
+  "ce_details\030\002 \001(\0132&.gRPCTest.Protos.Model"
+  "s.InvoiceDetails\022=\n\014error_status\030\003 \001(\0132\'"
+  ".gRPCTest.Protos.Services.ServiceStatus\""
+  "\211\001\n\025FetchInvoicesResponse\0221\n\010invoices\030\001 "
+  "\003(\0132\037.gRPCTest.Protos.Models.Invoice\022=\n\014"
+  "error_status\030\002 \001(\0132\'.gRPCTest.Protos.Ser"
+  "vices.ServiceStatus2\317\004\n\016InvoiceService\022g"
+  "\n\017RegisterInvoice\022\037.gRPCTest.Protos.Mode"
+  "ls.Invoice\0321.gRPCTest.Protos.Services.Re"
+  "gisterInvoiceResponse\"\000\022v\n\020FetchInvoiceB"
+  "yId\022,.gRPCTest.Protos.Services.InvoiceBy"
+  "IdRequest\0322.gRPCTest.Protos.Services.Fet"
+  "chInvoiceByIdResponse\"\000\022\201\001\n\022FetchInvoice"
+  "ByDate\0223.gRPCTest.Protos.Services.FetchI"
+  "nvoiceByDateRequest\0324.gRPCTest.Protos.Se"
+  "rvices.FetchInvoiceByDateResponse\"\000\022|\n\023F"
+  "etchInvoiceDetails\022,.gRPCTest.Protos.Ser"
+  "vices.InvoiceByIdRequest\0325.gRPCTest.Prot"
+  "os.Services.FetchInvoiceDetailsResponse\""
+  "\000\022Z\n\rFetchInvoices\022\026.google.protobuf.Emp"
+  "ty\032/.gRPCTest.Protos.Services.FetchInvoi"
+  "cesResponse\"\000b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_services_2fInvoiceService_2eproto_deps[5] = {
   &::descriptor_table_common_2fServiceStatus_2eproto,
@@ -254,7 +257,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_services_2fInvoiceS
 };
 static ::_pbi::once_flag descriptor_table_services_2fInvoiceService_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_services_2fInvoiceService_2eproto = {
-    false, false, 1640, descriptor_table_protodef_services_2fInvoiceService_2eproto,
+    false, false, 1661, descriptor_table_protodef_services_2fInvoiceService_2eproto,
     "services/InvoiceService.proto",
     &descriptor_table_services_2fInvoiceService_2eproto_once, descriptor_table_services_2fInvoiceService_2eproto_deps, 5, 7,
     schemas, file_default_instances, TableStruct_services_2fInvoiceService_2eproto::offsets,
@@ -300,7 +303,7 @@ inline void InvoiceByIdRequest::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.invoice_id_){int64_t{0}}
+      decltype(_impl_.invoice_id_){uint64_t{0u}}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -328,7 +331,7 @@ void InvoiceByIdRequest::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.invoice_id_ = int64_t{0};
+  _impl_.invoice_id_ = uint64_t{0u};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -338,7 +341,7 @@ const char* InvoiceByIdRequest::_InternalParse(const char* ptr, ::_pbi::ParseCon
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int64 invoice_id = 1;
+      // uint64 invoice_id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
           _impl_.invoice_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
@@ -375,10 +378,10 @@ uint8_t* InvoiceByIdRequest::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int64 invoice_id = 1;
+  // uint64 invoice_id = 1;
   if (this->_internal_invoice_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(1, this->_internal_invoice_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_invoice_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -397,9 +400,9 @@ size_t InvoiceByIdRequest::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // int64 invoice_id = 1;
+  // uint64 invoice_id = 1;
   if (this->_internal_invoice_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_invoice_id());
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_invoice_id());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -1154,23 +1157,15 @@ void FetchInvoiceByIdResponse::InternalSwap(FetchInvoiceByIdResponse* other) {
 
 class FetchInvoiceByDateResponse::_Internal {
  public:
-  static const ::gRPCTest::Protos::Models::Invoice& invoice(const FetchInvoiceByDateResponse* msg);
   static const ::gRPCTest::Protos::Services::ServiceStatus& error_status(const FetchInvoiceByDateResponse* msg);
 };
 
-const ::gRPCTest::Protos::Models::Invoice&
-FetchInvoiceByDateResponse::_Internal::invoice(const FetchInvoiceByDateResponse* msg) {
-  return *msg->_impl_.invoice_;
-}
 const ::gRPCTest::Protos::Services::ServiceStatus&
 FetchInvoiceByDateResponse::_Internal::error_status(const FetchInvoiceByDateResponse* msg) {
   return *msg->_impl_.error_status_;
 }
-void FetchInvoiceByDateResponse::clear_invoice() {
-  if (GetArenaForAllocation() == nullptr && _impl_.invoice_ != nullptr) {
-    delete _impl_.invoice_;
-  }
-  _impl_.invoice_ = nullptr;
+void FetchInvoiceByDateResponse::clear_invoices() {
+  _impl_.invoices_.Clear();
 }
 void FetchInvoiceByDateResponse::clear_error_status() {
   if (GetArenaForAllocation() == nullptr && _impl_.error_status_ != nullptr) {
@@ -1188,14 +1183,11 @@ FetchInvoiceByDateResponse::FetchInvoiceByDateResponse(const FetchInvoiceByDateR
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   FetchInvoiceByDateResponse* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.invoice_){nullptr}
+      decltype(_impl_.invoices_){from._impl_.invoices_}
     , decltype(_impl_.error_status_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_invoice()) {
-    _this->_impl_.invoice_ = new ::gRPCTest::Protos::Models::Invoice(*from._impl_.invoice_);
-  }
   if (from._internal_has_error_status()) {
     _this->_impl_.error_status_ = new ::gRPCTest::Protos::Services::ServiceStatus(*from._impl_.error_status_);
   }
@@ -1207,7 +1199,7 @@ inline void FetchInvoiceByDateResponse::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.invoice_){nullptr}
+      decltype(_impl_.invoices_){arena}
     , decltype(_impl_.error_status_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -1224,7 +1216,7 @@ FetchInvoiceByDateResponse::~FetchInvoiceByDateResponse() {
 
 inline void FetchInvoiceByDateResponse::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete _impl_.invoice_;
+  _impl_.invoices_.~RepeatedPtrField();
   if (this != internal_default_instance()) delete _impl_.error_status_;
 }
 
@@ -1238,10 +1230,7 @@ void FetchInvoiceByDateResponse::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.invoice_ != nullptr) {
-    delete _impl_.invoice_;
-  }
-  _impl_.invoice_ = nullptr;
+  _impl_.invoices_.Clear();
   if (GetArenaForAllocation() == nullptr && _impl_.error_status_ != nullptr) {
     delete _impl_.error_status_;
   }
@@ -1255,11 +1244,16 @@ const char* FetchInvoiceByDateResponse::_InternalParse(const char* ptr, ::_pbi::
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .gRPCTest.Protos.Models.Invoice invoice = 1;
+      // repeated .gRPCTest.Protos.Models.Invoice invoices = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_invoice(), ptr);
-          CHK_(ptr);
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_invoices(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
         } else
           goto handle_unusual;
         continue;
@@ -1300,11 +1294,12 @@ uint8_t* FetchInvoiceByDateResponse::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .gRPCTest.Protos.Models.Invoice invoice = 1;
-  if (this->_internal_has_invoice()) {
+  // repeated .gRPCTest.Protos.Models.Invoice invoices = 1;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_invoices_size()); i < n; i++) {
+    const auto& repfield = this->_internal_invoices(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::invoice(this),
-        _Internal::invoice(this).GetCachedSize(), target, stream);
+        InternalWriteMessage(1, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
@@ -1330,11 +1325,11 @@ size_t FetchInvoiceByDateResponse::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .gRPCTest.Protos.Models.Invoice invoice = 1;
-  if (this->_internal_has_invoice()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.invoice_);
+  // repeated .gRPCTest.Protos.Models.Invoice invoices = 1;
+  total_size += 1UL * this->_internal_invoices_size();
+  for (const auto& msg : this->_impl_.invoices_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
   }
 
   // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
@@ -1362,10 +1357,7 @@ void FetchInvoiceByDateResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_invoice()) {
-    _this->_internal_mutable_invoice()->::gRPCTest::Protos::Models::Invoice::MergeFrom(
-        from._internal_invoice());
-  }
+  _this->_impl_.invoices_.MergeFrom(from._impl_.invoices_);
   if (from._internal_has_error_status()) {
     _this->_internal_mutable_error_status()->::gRPCTest::Protos::Services::ServiceStatus::MergeFrom(
         from._internal_error_status());
@@ -1387,12 +1379,8 @@ bool FetchInvoiceByDateResponse::IsInitialized() const {
 void FetchInvoiceByDateResponse::InternalSwap(FetchInvoiceByDateResponse* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(FetchInvoiceByDateResponse, _impl_.error_status_)
-      + sizeof(FetchInvoiceByDateResponse::_impl_.error_status_)
-      - PROTOBUF_FIELD_OFFSET(FetchInvoiceByDateResponse, _impl_.invoice_)>(
-          reinterpret_cast<char*>(&_impl_.invoice_),
-          reinterpret_cast<char*>(&other->_impl_.invoice_));
+  _impl_.invoices_.InternalSwap(&other->_impl_.invoices_);
+  swap(_impl_.error_status_, other->_impl_.error_status_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata FetchInvoiceByDateResponse::GetMetadata() const {
@@ -1441,6 +1429,7 @@ FetchInvoiceDetailsResponse::FetchInvoiceDetailsResponse(const FetchInvoiceDetai
   new (&_impl_) Impl_{
       decltype(_impl_.invoice_details_){nullptr}
     , decltype(_impl_.error_status_){nullptr}
+    , decltype(_impl_.invoice_id_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -1450,6 +1439,7 @@ FetchInvoiceDetailsResponse::FetchInvoiceDetailsResponse(const FetchInvoiceDetai
   if (from._internal_has_error_status()) {
     _this->_impl_.error_status_ = new ::gRPCTest::Protos::Services::ServiceStatus(*from._impl_.error_status_);
   }
+  _this->_impl_.invoice_id_ = from._impl_.invoice_id_;
   // @@protoc_insertion_point(copy_constructor:gRPCTest.Protos.Services.FetchInvoiceDetailsResponse)
 }
 
@@ -1460,6 +1450,7 @@ inline void FetchInvoiceDetailsResponse::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_.invoice_details_){nullptr}
     , decltype(_impl_.error_status_){nullptr}
+    , decltype(_impl_.invoice_id_){uint64_t{0u}}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -1497,6 +1488,7 @@ void FetchInvoiceDetailsResponse::Clear() {
     delete _impl_.error_status_;
   }
   _impl_.error_status_ = nullptr;
+  _impl_.invoice_id_ = uint64_t{0u};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1506,17 +1498,25 @@ const char* FetchInvoiceDetailsResponse::_InternalParse(const char* ptr, ::_pbi:
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .gRPCTest.Protos.Models.InvoiceDetails invoice_details = 1;
+      // uint64 invoice_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.invoice_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .gRPCTest.Protos.Models.InvoiceDetails invoice_details = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_invoice_details(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+      // .gRPCTest.Protos.Services.ServiceStatus error_status = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr = ctx->ParseMessage(_internal_mutable_error_status(), ptr);
           CHK_(ptr);
         } else
@@ -1551,17 +1551,23 @@ uint8_t* FetchInvoiceDetailsResponse::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .gRPCTest.Protos.Models.InvoiceDetails invoice_details = 1;
+  // uint64 invoice_id = 1;
+  if (this->_internal_invoice_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_invoice_id(), target);
+  }
+
+  // .gRPCTest.Protos.Models.InvoiceDetails invoice_details = 2;
   if (this->_internal_has_invoice_details()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::invoice_details(this),
+      InternalWriteMessage(2, _Internal::invoice_details(this),
         _Internal::invoice_details(this).GetCachedSize(), target, stream);
   }
 
-  // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
+  // .gRPCTest.Protos.Services.ServiceStatus error_status = 3;
   if (this->_internal_has_error_status()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, _Internal::error_status(this),
+      InternalWriteMessage(3, _Internal::error_status(this),
         _Internal::error_status(this).GetCachedSize(), target, stream);
   }
 
@@ -1581,18 +1587,23 @@ size_t FetchInvoiceDetailsResponse::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .gRPCTest.Protos.Models.InvoiceDetails invoice_details = 1;
+  // .gRPCTest.Protos.Models.InvoiceDetails invoice_details = 2;
   if (this->_internal_has_invoice_details()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.invoice_details_);
   }
 
-  // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
+  // .gRPCTest.Protos.Services.ServiceStatus error_status = 3;
   if (this->_internal_has_error_status()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *_impl_.error_status_);
+  }
+
+  // uint64 invoice_id = 1;
+  if (this->_internal_invoice_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_invoice_id());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -1621,6 +1632,9 @@ void FetchInvoiceDetailsResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to
     _this->_internal_mutable_error_status()->::gRPCTest::Protos::Services::ServiceStatus::MergeFrom(
         from._internal_error_status());
   }
+  if (from._internal_invoice_id() != 0) {
+    _this->_internal_set_invoice_id(from._internal_invoice_id());
+  }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1639,8 +1653,8 @@ void FetchInvoiceDetailsResponse::InternalSwap(FetchInvoiceDetailsResponse* othe
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(FetchInvoiceDetailsResponse, _impl_.error_status_)
-      + sizeof(FetchInvoiceDetailsResponse::_impl_.error_status_)
+      PROTOBUF_FIELD_OFFSET(FetchInvoiceDetailsResponse, _impl_.invoice_id_)
+      + sizeof(FetchInvoiceDetailsResponse::_impl_.invoice_id_)
       - PROTOBUF_FIELD_OFFSET(FetchInvoiceDetailsResponse, _impl_.invoice_details_)>(
           reinterpret_cast<char*>(&_impl_.invoice_details_),
           reinterpret_cast<char*>(&other->_impl_.invoice_details_));

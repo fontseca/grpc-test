@@ -31,7 +31,6 @@
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
 #include <google/protobuf/timestamp.pb.h>
-#include "models/Client.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_models_2fInvoice_2eproto
@@ -185,13 +184,13 @@ class Invoice final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kNameFieldNumber = 2,
-    kAddressFieldNumber = 3,
-    kClientFieldNumber = 4,
+    kNameFieldNumber = 3,
+    kAddressFieldNumber = 4,
     kCreatedAtFieldNumber = 5,
     kIdFieldNumber = 1,
+    kClientIdFieldNumber = 2,
   };
-  // string name = 2;
+  // string name = 3;
   void clear_name();
   const std::string& name() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -205,7 +204,7 @@ class Invoice final :
   std::string* _internal_mutable_name();
   public:
 
-  // string address = 3;
+  // string address = 4;
   void clear_address();
   const std::string& address() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
@@ -218,24 +217,6 @@ class Invoice final :
   inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
   std::string* _internal_mutable_address();
   public:
-
-  // .gRPCTest.Protos.Models.Client client = 4;
-  bool has_client() const;
-  private:
-  bool _internal_has_client() const;
-  public:
-  void clear_client();
-  const ::gRPCTest::Protos::Models::Client& client() const;
-  PROTOBUF_NODISCARD ::gRPCTest::Protos::Models::Client* release_client();
-  ::gRPCTest::Protos::Models::Client* mutable_client();
-  void set_allocated_client(::gRPCTest::Protos::Models::Client* client);
-  private:
-  const ::gRPCTest::Protos::Models::Client& _internal_client() const;
-  ::gRPCTest::Protos::Models::Client* _internal_mutable_client();
-  public:
-  void unsafe_arena_set_allocated_client(
-      ::gRPCTest::Protos::Models::Client* client);
-  ::gRPCTest::Protos::Models::Client* unsafe_arena_release_client();
 
   // .google.protobuf.Timestamp created_at = 5;
   bool has_created_at() const;
@@ -255,13 +236,22 @@ class Invoice final :
       ::PROTOBUF_NAMESPACE_ID::Timestamp* created_at);
   ::PROTOBUF_NAMESPACE_ID::Timestamp* unsafe_arena_release_created_at();
 
-  // int64 id = 1;
+  // uint64 id = 1;
   void clear_id();
-  int64_t id() const;
-  void set_id(int64_t value);
+  uint64_t id() const;
+  void set_id(uint64_t value);
   private:
-  int64_t _internal_id() const;
-  void _internal_set_id(int64_t value);
+  uint64_t _internal_id() const;
+  void _internal_set_id(uint64_t value);
+  public:
+
+  // uint64 client_id = 2;
+  void clear_client_id();
+  uint64_t client_id() const;
+  void set_client_id(uint64_t value);
+  private:
+  uint64_t _internal_client_id() const;
+  void _internal_set_client_id(uint64_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:gRPCTest.Protos.Models.Invoice)
@@ -274,9 +264,9 @@ class Invoice final :
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
-    ::gRPCTest::Protos::Models::Client* client_;
     ::PROTOBUF_NAMESPACE_ID::Timestamp* created_at_;
-    int64_t id_;
+    uint64_t id_;
+    uint64_t client_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -293,27 +283,47 @@ class Invoice final :
 #endif  // __GNUC__
 // Invoice
 
-// int64 id = 1;
+// uint64 id = 1;
 inline void Invoice::clear_id() {
-  _impl_.id_ = int64_t{0};
+  _impl_.id_ = uint64_t{0u};
 }
-inline int64_t Invoice::_internal_id() const {
+inline uint64_t Invoice::_internal_id() const {
   return _impl_.id_;
 }
-inline int64_t Invoice::id() const {
+inline uint64_t Invoice::id() const {
   // @@protoc_insertion_point(field_get:gRPCTest.Protos.Models.Invoice.id)
   return _internal_id();
 }
-inline void Invoice::_internal_set_id(int64_t value) {
+inline void Invoice::_internal_set_id(uint64_t value) {
   
   _impl_.id_ = value;
 }
-inline void Invoice::set_id(int64_t value) {
+inline void Invoice::set_id(uint64_t value) {
   _internal_set_id(value);
   // @@protoc_insertion_point(field_set:gRPCTest.Protos.Models.Invoice.id)
 }
 
-// string name = 2;
+// uint64 client_id = 2;
+inline void Invoice::clear_client_id() {
+  _impl_.client_id_ = uint64_t{0u};
+}
+inline uint64_t Invoice::_internal_client_id() const {
+  return _impl_.client_id_;
+}
+inline uint64_t Invoice::client_id() const {
+  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Models.Invoice.client_id)
+  return _internal_client_id();
+}
+inline void Invoice::_internal_set_client_id(uint64_t value) {
+  
+  _impl_.client_id_ = value;
+}
+inline void Invoice::set_client_id(uint64_t value) {
+  _internal_set_client_id(value);
+  // @@protoc_insertion_point(field_set:gRPCTest.Protos.Models.Invoice.client_id)
+}
+
+// string name = 3;
 inline void Invoice::clear_name() {
   _impl_.name_.ClearToEmpty();
 }
@@ -363,7 +373,7 @@ inline void Invoice::set_allocated_name(std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:gRPCTest.Protos.Models.Invoice.name)
 }
 
-// string address = 3;
+// string address = 4;
 inline void Invoice::clear_address() {
   _impl_.address_.ClearToEmpty();
 }
@@ -411,91 +421,6 @@ inline void Invoice::set_allocated_address(std::string* address) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:gRPCTest.Protos.Models.Invoice.address)
-}
-
-// .gRPCTest.Protos.Models.Client client = 4;
-inline bool Invoice::_internal_has_client() const {
-  return this != internal_default_instance() && _impl_.client_ != nullptr;
-}
-inline bool Invoice::has_client() const {
-  return _internal_has_client();
-}
-inline const ::gRPCTest::Protos::Models::Client& Invoice::_internal_client() const {
-  const ::gRPCTest::Protos::Models::Client* p = _impl_.client_;
-  return p != nullptr ? *p : reinterpret_cast<const ::gRPCTest::Protos::Models::Client&>(
-      ::gRPCTest::Protos::Models::_Client_default_instance_);
-}
-inline const ::gRPCTest::Protos::Models::Client& Invoice::client() const {
-  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Models.Invoice.client)
-  return _internal_client();
-}
-inline void Invoice::unsafe_arena_set_allocated_client(
-    ::gRPCTest::Protos::Models::Client* client) {
-  if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.client_);
-  }
-  _impl_.client_ = client;
-  if (client) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:gRPCTest.Protos.Models.Invoice.client)
-}
-inline ::gRPCTest::Protos::Models::Client* Invoice::release_client() {
-  
-  ::gRPCTest::Protos::Models::Client* temp = _impl_.client_;
-  _impl_.client_ = nullptr;
-#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  if (GetArenaForAllocation() == nullptr) { delete old; }
-#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return temp;
-}
-inline ::gRPCTest::Protos::Models::Client* Invoice::unsafe_arena_release_client() {
-  // @@protoc_insertion_point(field_release:gRPCTest.Protos.Models.Invoice.client)
-  
-  ::gRPCTest::Protos::Models::Client* temp = _impl_.client_;
-  _impl_.client_ = nullptr;
-  return temp;
-}
-inline ::gRPCTest::Protos::Models::Client* Invoice::_internal_mutable_client() {
-  
-  if (_impl_.client_ == nullptr) {
-    auto* p = CreateMaybeMessage<::gRPCTest::Protos::Models::Client>(GetArenaForAllocation());
-    _impl_.client_ = p;
-  }
-  return _impl_.client_;
-}
-inline ::gRPCTest::Protos::Models::Client* Invoice::mutable_client() {
-  ::gRPCTest::Protos::Models::Client* _msg = _internal_mutable_client();
-  // @@protoc_insertion_point(field_mutable:gRPCTest.Protos.Models.Invoice.client)
-  return _msg;
-}
-inline void Invoice::set_allocated_client(::gRPCTest::Protos::Models::Client* client) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.client_);
-  }
-  if (client) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(client));
-    if (message_arena != submessage_arena) {
-      client = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, client, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  _impl_.client_ = client;
-  // @@protoc_insertion_point(field_set_allocated:gRPCTest.Protos.Models.Invoice.client)
 }
 
 // .google.protobuf.Timestamp created_at = 5;

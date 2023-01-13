@@ -25,7 +25,7 @@ namespace Protos {
 namespace Models {
 PROTOBUF_CONSTEXPR InvoiceDetails::InvoiceDetails(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.product_)*/nullptr
+    /*decltype(_impl_.product_id_)*/uint64_t{0u}
   , /*decltype(_impl_.discount_)*/0
   , /*decltype(_impl_.total_)*/0
   , /*decltype(_impl_.amount_)*/0
@@ -53,7 +53,7 @@ const uint32_t TableStruct_models_2fInvoiceDetails_2eproto::offsets[] PROTOBUF_S
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Models::InvoiceDetails, _impl_.product_),
+  PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Models::InvoiceDetails, _impl_.product_id_),
   PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Models::InvoiceDetails, _impl_.discount_),
   PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Models::InvoiceDetails, _impl_.amount_),
   PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Models::InvoiceDetails, _impl_.total_),
@@ -68,19 +68,15 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_models_2fInvoiceDetails_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\033models/InvoiceDetails.proto\022\026gRPCTest."
-  "Protos.Models\032\024models/Product.proto\"s\n\016I"
-  "nvoiceDetails\0220\n\007product\030\001 \001(\0132\037.gRPCTes"
-  "t.Protos.Models.Product\022\020\n\010discount\030\002 \001("
-  "\001\022\016\n\006amount\030\003 \001(\005\022\r\n\005total\030\004 \001(\001b\006proto3"
+  "Protos.Models\"U\n\016InvoiceDetails\022\022\n\nprodu"
+  "ct_id\030\001 \001(\004\022\020\n\010discount\030\002 \001(\001\022\016\n\006amount\030"
+  "\003 \001(\005\022\r\n\005total\030\004 \001(\001b\006proto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_models_2fInvoiceDetails_2eproto_deps[1] = {
-  &::descriptor_table_models_2fProduct_2eproto,
-};
 static ::_pbi::once_flag descriptor_table_models_2fInvoiceDetails_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_models_2fInvoiceDetails_2eproto = {
-    false, false, 200, descriptor_table_protodef_models_2fInvoiceDetails_2eproto,
+    false, false, 148, descriptor_table_protodef_models_2fInvoiceDetails_2eproto,
     "models/InvoiceDetails.proto",
-    &descriptor_table_models_2fInvoiceDetails_2eproto_once, descriptor_table_models_2fInvoiceDetails_2eproto_deps, 1, 1,
+    &descriptor_table_models_2fInvoiceDetails_2eproto_once, nullptr, 0, 1,
     schemas, file_default_instances, TableStruct_models_2fInvoiceDetails_2eproto::offsets,
     file_level_metadata_models_2fInvoiceDetails_2eproto, file_level_enum_descriptors_models_2fInvoiceDetails_2eproto,
     file_level_service_descriptors_models_2fInvoiceDetails_2eproto,
@@ -99,19 +95,8 @@ namespace Models {
 
 class InvoiceDetails::_Internal {
  public:
-  static const ::gRPCTest::Protos::Models::Product& product(const InvoiceDetails* msg);
 };
 
-const ::gRPCTest::Protos::Models::Product&
-InvoiceDetails::_Internal::product(const InvoiceDetails* msg) {
-  return *msg->_impl_.product_;
-}
-void InvoiceDetails::clear_product() {
-  if (GetArenaForAllocation() == nullptr && _impl_.product_ != nullptr) {
-    delete _impl_.product_;
-  }
-  _impl_.product_ = nullptr;
-}
 InvoiceDetails::InvoiceDetails(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -122,19 +107,16 @@ InvoiceDetails::InvoiceDetails(const InvoiceDetails& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   InvoiceDetails* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.product_){nullptr}
+      decltype(_impl_.product_id_){}
     , decltype(_impl_.discount_){}
     , decltype(_impl_.total_){}
     , decltype(_impl_.amount_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_product()) {
-    _this->_impl_.product_ = new ::gRPCTest::Protos::Models::Product(*from._impl_.product_);
-  }
-  ::memcpy(&_impl_.discount_, &from._impl_.discount_,
+  ::memcpy(&_impl_.product_id_, &from._impl_.product_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.amount_) -
-    reinterpret_cast<char*>(&_impl_.discount_)) + sizeof(_impl_.amount_));
+    reinterpret_cast<char*>(&_impl_.product_id_)) + sizeof(_impl_.amount_));
   // @@protoc_insertion_point(copy_constructor:gRPCTest.Protos.Models.InvoiceDetails)
 }
 
@@ -143,7 +125,7 @@ inline void InvoiceDetails::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.product_){nullptr}
+      decltype(_impl_.product_id_){uint64_t{0u}}
     , decltype(_impl_.discount_){0}
     , decltype(_impl_.total_){0}
     , decltype(_impl_.amount_){0}
@@ -162,7 +144,6 @@ InvoiceDetails::~InvoiceDetails() {
 
 inline void InvoiceDetails::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete _impl_.product_;
 }
 
 void InvoiceDetails::SetCachedSize(int size) const {
@@ -175,13 +156,9 @@ void InvoiceDetails::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.product_ != nullptr) {
-    delete _impl_.product_;
-  }
-  _impl_.product_ = nullptr;
-  ::memset(&_impl_.discount_, 0, static_cast<size_t>(
+  ::memset(&_impl_.product_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.amount_) -
-      reinterpret_cast<char*>(&_impl_.discount_)) + sizeof(_impl_.amount_));
+      reinterpret_cast<char*>(&_impl_.product_id_)) + sizeof(_impl_.amount_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -191,10 +168,10 @@ const char* InvoiceDetails::_InternalParse(const char* ptr, ::_pbi::ParseContext
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .gRPCTest.Protos.Models.Product product = 1;
+      // uint64 product_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_product(), ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          _impl_.product_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -252,11 +229,10 @@ uint8_t* InvoiceDetails::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .gRPCTest.Protos.Models.Product product = 1;
-  if (this->_internal_has_product()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::product(this),
-        _Internal::product(this).GetCachedSize(), target, stream);
+  // uint64 product_id = 1;
+  if (this->_internal_product_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_product_id(), target);
   }
 
   // double discount = 2;
@@ -301,11 +277,9 @@ size_t InvoiceDetails::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .gRPCTest.Protos.Models.Product product = 1;
-  if (this->_internal_has_product()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.product_);
+  // uint64 product_id = 1;
+  if (this->_internal_product_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_product_id());
   }
 
   // double discount = 2;
@@ -349,9 +323,8 @@ void InvoiceDetails::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_product()) {
-    _this->_internal_mutable_product()->::gRPCTest::Protos::Models::Product::MergeFrom(
-        from._internal_product());
+  if (from._internal_product_id() != 0) {
+    _this->_internal_set_product_id(from._internal_product_id());
   }
   static_assert(sizeof(uint64_t) == sizeof(double), "Code assumes uint64_t and double are the same size.");
   double tmp_discount = from._internal_discount();
@@ -390,9 +363,9 @@ void InvoiceDetails::InternalSwap(InvoiceDetails* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(InvoiceDetails, _impl_.amount_)
       + sizeof(InvoiceDetails::_impl_.amount_)
-      - PROTOBUF_FIELD_OFFSET(InvoiceDetails, _impl_.product_)>(
-          reinterpret_cast<char*>(&_impl_.product_),
-          reinterpret_cast<char*>(&other->_impl_.product_));
+      - PROTOBUF_FIELD_OFFSET(InvoiceDetails, _impl_.product_id_)>(
+          reinterpret_cast<char*>(&_impl_.product_id_),
+          reinterpret_cast<char*>(&other->_impl_.product_id_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata InvoiceDetails::GetMetadata() const {

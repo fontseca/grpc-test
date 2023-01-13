@@ -12,7 +12,7 @@ import "common/ServiceStatus.proto";
 
 message InvoiceByIdRequest
 {
-  int64 invoice_id = 1;
+  uint64 invoice_id = 1;
 }
 
 message FetchInvoiceByDateRequest
@@ -36,14 +36,15 @@ message FetchInvoiceByIdResponse
 
 message FetchInvoiceByDateResponse
 {
-  gRPCTest.Protos.Models.Invoice invoice = 1;
+  repeated gRPCTest.Protos.Models.Invoice invoices = 1;
   ServiceStatus error_status = 2;
 }
 
 message FetchInvoiceDetailsResponse
 {
-  gRPCTest.Protos.Models.InvoiceDetails invoice_details = 1;
-  ServiceStatus error_status = 2;
+  uint64 invoice_id = 1;
+  gRPCTest.Protos.Models.InvoiceDetails invoice_details = 2;
+  ServiceStatus error_status = 3;
 }
 
 message FetchInvoicesResponse
@@ -52,7 +53,7 @@ message FetchInvoicesResponse
   ServiceStatus error_status = 2;
 }
 
-/* Invoice service. */ 
+/* Invoice service.  */ 
 
 service InvoiceService
 {

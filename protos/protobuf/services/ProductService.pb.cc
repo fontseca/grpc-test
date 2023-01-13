@@ -25,7 +25,7 @@ namespace Protos {
 namespace Services {
 PROTOBUF_CONSTEXPR ProductByIdRequest::ProductByIdRequest(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.product_id_)*/int64_t{0}
+    /*decltype(_impl_.product_id_)*/uint64_t{0u}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ProductByIdRequestDefaultTypeInternal {
   PROTOBUF_CONSTEXPR ProductByIdRequestDefaultTypeInternal()
@@ -159,7 +159,7 @@ const char descriptor_table_protodef_services_2fProductService_2eproto[] PROTOBU
   "t.Protos.Services\032\033google/protobuf/empty"
   ".proto\032\024models/Product.proto\032\032common/Ser"
   "viceStatus.proto\"(\n\022ProductByIdRequest\022\022"
-  "\n\nproduct_id\030\001 \001(\003\",\n\023ProductPriceReques"
+  "\n\nproduct_id\030\001 \001(\004\",\n\023ProductPriceReques"
   "t\022\025\n\rproduct_price\030\001 \001(\001\"\210\001\n\025CreateProdu"
   "ctResponse\0220\n\007product\030\001 \001(\0132\037.gRPCTest.P"
   "rotos.Models.Product\022=\n\014error_status\030\002 \001"
@@ -237,7 +237,7 @@ inline void ProductByIdRequest::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.product_id_){int64_t{0}}
+      decltype(_impl_.product_id_){uint64_t{0u}}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -265,7 +265,7 @@ void ProductByIdRequest::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.product_id_ = int64_t{0};
+  _impl_.product_id_ = uint64_t{0u};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -275,7 +275,7 @@ const char* ProductByIdRequest::_InternalParse(const char* ptr, ::_pbi::ParseCon
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int64 product_id = 1;
+      // uint64 product_id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
           _impl_.product_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
@@ -312,10 +312,10 @@ uint8_t* ProductByIdRequest::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int64 product_id = 1;
+  // uint64 product_id = 1;
   if (this->_internal_product_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(1, this->_internal_product_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_product_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -334,9 +334,9 @@ size_t ProductByIdRequest::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // int64 product_id = 1;
+  // uint64 product_id = 1;
   if (this->_internal_product_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_product_id());
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_product_id());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);

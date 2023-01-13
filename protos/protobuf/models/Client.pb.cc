@@ -28,7 +28,7 @@ PROTOBUF_CONSTEXPR Client::Client(
     /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.phone_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.email_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.id_)*/int64_t{0}
+  , /*decltype(_impl_.id_)*/uint64_t{0u}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ClientDefaultTypeInternal {
   PROTOBUF_CONSTEXPR ClientDefaultTypeInternal()
@@ -68,7 +68,7 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_models_2fClient_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\023models/Client.proto\022\026gRPCTest.Protos.M"
-  "odels\"@\n\006Client\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030\002 \001("
+  "odels\"@\n\006Client\022\n\n\002id\030\001 \001(\004\022\014\n\004name\030\002 \001("
   "\t\022\r\n\005phone\030\003 \001(\t\022\r\n\005email\030\004 \001(\tb\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_models_2fClient_2eproto_once;
@@ -149,7 +149,7 @@ inline void Client::SharedCtor(
       decltype(_impl_.name_){}
     , decltype(_impl_.phone_){}
     , decltype(_impl_.email_){}
-    , decltype(_impl_.id_){int64_t{0}}
+    , decltype(_impl_.id_){uint64_t{0u}}
     , /*decltype(_impl_._cached_size_)*/{}
   };
   _impl_.name_.InitDefault();
@@ -195,7 +195,7 @@ void Client::Clear() {
   _impl_.name_.ClearToEmpty();
   _impl_.phone_.ClearToEmpty();
   _impl_.email_.ClearToEmpty();
-  _impl_.id_ = int64_t{0};
+  _impl_.id_ = uint64_t{0u};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -205,7 +205,7 @@ const char* Client::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int64 id = 1;
+      // uint64 id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
           _impl_.id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
@@ -272,10 +272,10 @@ uint8_t* Client::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int64 id = 1;
+  // uint64 id = 1;
   if (this->_internal_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(1, this->_internal_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_id(), target);
   }
 
   // string name = 2;
@@ -345,9 +345,9 @@ size_t Client::ByteSizeLong() const {
         this->_internal_email());
   }
 
-  // int64 id = 1;
+  // uint64 id = 1;
   if (this->_internal_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_id());
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_id());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);

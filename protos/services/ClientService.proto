@@ -11,7 +11,7 @@ import "common/ServiceStatus.proto";
 
 message ClientByIdRequest
 {
-  int64 client_id = 1;
+  uint64 client_id = 1;
 }
 
 /* Responses.  */
@@ -22,7 +22,7 @@ message CreateClientResponse
   ServiceStatus error_status = 2;
 }
 
-message ListClientResponse
+message FetchClientByIdResponse
 {
   gRPCTest.Protos.Models.Client client = 1;
   ServiceStatus error_status = 2;
@@ -36,8 +36,9 @@ message FetchAllClientsResponse
 
 message FetchClientInvoicesResponse
 {
-  repeated gRPCTest.Protos.Models.Invoice invoices = 1;
-  ServiceStatus error_status = 2;
+  uint64 clinet_id = 1;
+  repeated gRPCTest.Protos.Models.Invoice invoices = 2;
+  ServiceStatus error_status = 3;
 }
 
 /* Client service. */
@@ -48,8 +49,8 @@ service ClientService
     returns (CreateClientResponse)
   { }
 
-  rpc ListClient (ClientByIdRequest)
-    returns (ListClientResponse)
+  rpc FetchClientById (ClientByIdRequest)
+    returns (FetchClientByIdResponse)
   { }
 
   rpc FetchAllClients (google.protobuf.Empty)

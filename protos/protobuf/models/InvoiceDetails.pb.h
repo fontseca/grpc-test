@@ -30,7 +30,6 @@
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
-#include "models/Product.pb.h"
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
 #define PROTOBUF_INTERNAL_EXPORT_models_2fInvoiceDetails_2eproto
@@ -184,28 +183,19 @@ class InvoiceDetails final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kProductFieldNumber = 1,
+    kProductIdFieldNumber = 1,
     kDiscountFieldNumber = 2,
     kTotalFieldNumber = 4,
     kAmountFieldNumber = 3,
   };
-  // .gRPCTest.Protos.Models.Product product = 1;
-  bool has_product() const;
+  // uint64 product_id = 1;
+  void clear_product_id();
+  uint64_t product_id() const;
+  void set_product_id(uint64_t value);
   private:
-  bool _internal_has_product() const;
+  uint64_t _internal_product_id() const;
+  void _internal_set_product_id(uint64_t value);
   public:
-  void clear_product();
-  const ::gRPCTest::Protos::Models::Product& product() const;
-  PROTOBUF_NODISCARD ::gRPCTest::Protos::Models::Product* release_product();
-  ::gRPCTest::Protos::Models::Product* mutable_product();
-  void set_allocated_product(::gRPCTest::Protos::Models::Product* product);
-  private:
-  const ::gRPCTest::Protos::Models::Product& _internal_product() const;
-  ::gRPCTest::Protos::Models::Product* _internal_mutable_product();
-  public:
-  void unsafe_arena_set_allocated_product(
-      ::gRPCTest::Protos::Models::Product* product);
-  ::gRPCTest::Protos::Models::Product* unsafe_arena_release_product();
 
   // double discount = 2;
   void clear_discount();
@@ -242,7 +232,7 @@ class InvoiceDetails final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::gRPCTest::Protos::Models::Product* product_;
+    uint64_t product_id_;
     double discount_;
     double total_;
     int32_t amount_;
@@ -262,89 +252,24 @@ class InvoiceDetails final :
 #endif  // __GNUC__
 // InvoiceDetails
 
-// .gRPCTest.Protos.Models.Product product = 1;
-inline bool InvoiceDetails::_internal_has_product() const {
-  return this != internal_default_instance() && _impl_.product_ != nullptr;
+// uint64 product_id = 1;
+inline void InvoiceDetails::clear_product_id() {
+  _impl_.product_id_ = uint64_t{0u};
 }
-inline bool InvoiceDetails::has_product() const {
-  return _internal_has_product();
+inline uint64_t InvoiceDetails::_internal_product_id() const {
+  return _impl_.product_id_;
 }
-inline const ::gRPCTest::Protos::Models::Product& InvoiceDetails::_internal_product() const {
-  const ::gRPCTest::Protos::Models::Product* p = _impl_.product_;
-  return p != nullptr ? *p : reinterpret_cast<const ::gRPCTest::Protos::Models::Product&>(
-      ::gRPCTest::Protos::Models::_Product_default_instance_);
+inline uint64_t InvoiceDetails::product_id() const {
+  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Models.InvoiceDetails.product_id)
+  return _internal_product_id();
 }
-inline const ::gRPCTest::Protos::Models::Product& InvoiceDetails::product() const {
-  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Models.InvoiceDetails.product)
-  return _internal_product();
-}
-inline void InvoiceDetails::unsafe_arena_set_allocated_product(
-    ::gRPCTest::Protos::Models::Product* product) {
-  if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.product_);
-  }
-  _impl_.product_ = product;
-  if (product) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:gRPCTest.Protos.Models.InvoiceDetails.product)
-}
-inline ::gRPCTest::Protos::Models::Product* InvoiceDetails::release_product() {
+inline void InvoiceDetails::_internal_set_product_id(uint64_t value) {
   
-  ::gRPCTest::Protos::Models::Product* temp = _impl_.product_;
-  _impl_.product_ = nullptr;
-#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  if (GetArenaForAllocation() == nullptr) { delete old; }
-#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return temp;
+  _impl_.product_id_ = value;
 }
-inline ::gRPCTest::Protos::Models::Product* InvoiceDetails::unsafe_arena_release_product() {
-  // @@protoc_insertion_point(field_release:gRPCTest.Protos.Models.InvoiceDetails.product)
-  
-  ::gRPCTest::Protos::Models::Product* temp = _impl_.product_;
-  _impl_.product_ = nullptr;
-  return temp;
-}
-inline ::gRPCTest::Protos::Models::Product* InvoiceDetails::_internal_mutable_product() {
-  
-  if (_impl_.product_ == nullptr) {
-    auto* p = CreateMaybeMessage<::gRPCTest::Protos::Models::Product>(GetArenaForAllocation());
-    _impl_.product_ = p;
-  }
-  return _impl_.product_;
-}
-inline ::gRPCTest::Protos::Models::Product* InvoiceDetails::mutable_product() {
-  ::gRPCTest::Protos::Models::Product* _msg = _internal_mutable_product();
-  // @@protoc_insertion_point(field_mutable:gRPCTest.Protos.Models.InvoiceDetails.product)
-  return _msg;
-}
-inline void InvoiceDetails::set_allocated_product(::gRPCTest::Protos::Models::Product* product) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.product_);
-  }
-  if (product) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(product));
-    if (message_arena != submessage_arena) {
-      product = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, product, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  _impl_.product_ = product;
-  // @@protoc_insertion_point(field_set_allocated:gRPCTest.Protos.Models.InvoiceDetails.product)
+inline void InvoiceDetails::set_product_id(uint64_t value) {
+  _internal_set_product_id(value);
+  // @@protoc_insertion_point(field_set:gRPCTest.Protos.Models.InvoiceDetails.product_id)
 }
 
 // double discount = 2;

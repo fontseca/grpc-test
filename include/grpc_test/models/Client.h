@@ -24,11 +24,7 @@ namespace gRPCTest::Core
   class RepositoryTraits<Models::Client>
   {
   public:
-    static constexpr auto RepositoryName() noexcept
-      -> const char *
-    {
-      return "Client";
-    }
+    static constexpr const char *RepositoryName = "Client";
   };
 }
 

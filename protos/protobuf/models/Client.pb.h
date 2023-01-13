@@ -230,13 +230,13 @@ class Client final :
   std::string* _internal_mutable_email();
   public:
 
-  // int64 id = 1;
+  // uint64 id = 1;
   void clear_id();
-  int64_t id() const;
-  void set_id(int64_t value);
+  uint64_t id() const;
+  void set_id(uint64_t value);
   private:
-  int64_t _internal_id() const;
-  void _internal_set_id(int64_t value);
+  uint64_t _internal_id() const;
+  void _internal_set_id(uint64_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:gRPCTest.Protos.Models.Client)
@@ -250,7 +250,7 @@ class Client final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr phone_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr email_;
-    int64_t id_;
+    uint64_t id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -267,22 +267,22 @@ class Client final :
 #endif  // __GNUC__
 // Client
 
-// int64 id = 1;
+// uint64 id = 1;
 inline void Client::clear_id() {
-  _impl_.id_ = int64_t{0};
+  _impl_.id_ = uint64_t{0u};
 }
-inline int64_t Client::_internal_id() const {
+inline uint64_t Client::_internal_id() const {
   return _impl_.id_;
 }
-inline int64_t Client::id() const {
+inline uint64_t Client::id() const {
   // @@protoc_insertion_point(field_get:gRPCTest.Protos.Models.Client.id)
   return _internal_id();
 }
-inline void Client::_internal_set_id(int64_t value) {
+inline void Client::_internal_set_id(uint64_t value) {
   
   _impl_.id_ = value;
 }
-inline void Client::set_id(int64_t value) {
+inline void Client::set_id(uint64_t value) {
   _internal_set_id(value);
   // @@protoc_insertion_point(field_set:gRPCTest.Protos.Models.Client.id)
 }

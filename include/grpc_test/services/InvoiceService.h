@@ -11,38 +11,40 @@
 #include "grpc_test/models/Invoice.h"
 #include "grpc_test/models/Client.h"
 #include "grpc_test/Logger.h"
+#include "grpc_test/Database.h"
 #include "protobuf/services/InvoiceService.grpc.pb.h"
 
 namespace gRPCTest::Core::Services
 {
   class InvoiceService final : public ::gRPCTest::Protos::Services::InvoiceService::Service
   {
+  public:
+    explicit inline InvoiceService(::gRPCTest::Core::Database &database) noexcept
+      : m_database { database }
+    { }
+
+  private:
     virtual ::grpc::Status RegisterInvoice([[maybe_unused]] ::grpc::ServerContext* context,
       const ::gRPCTest::Protos::Models::Invoice* request,
         ::gRPCTest::Protos::Services::RegisterInvoiceResponse* response)
     {
-      gRPCTest::Logger::Log(stdout, "making a new invoice...");
+      ::gRPCTest::Logger::Log(stdout, "making a new invoice...");
 
-      std::size_t previouse_data_store_size = m_invoices_data_store.size();
-      gRPCTest::Core::Models::Client new_client
-      {
-        .id = static_cast<std::uint64_t>(request->client().id()),
-        .name = request->client().name(),
-        .phone = request->client().phone(),
-        .email = request->client().email()
-      };
+      auto repository = m_database.Repository<::gRPCTest::Core::Models::Invoice>();
 
-      gRPCTest::Core::Models::Invoice invoice
+      std::size_t previouse_data_store_size = repository->Size();
+
+      ::gRPCTest::Core::Models::Invoice invoice
       {
-        .id = static_cast<std::uint64_t>(request->id()),
+        .id = request->id(),
+        .client_id = request->client_id(),
         .name = request->name(),
         .address = request->address(),
-        .client = std::move( new_client ),
-        .created_at = std::chrono::high_resolution_clock::now()
+        .created_at = std::chrono::high_resolution_clock::now(),
       };
 
-      m_invoices_data_store.push_back( std::move(invoice) );
-      response->mutable_error_status()->set_successful(previouse_data_store_size > m_invoices_data_store.size());
+      repository->InsertOne(invoice);
+      response->mutable_error_status()->set_successful(previouse_data_store_size > repository->Size());
       return ::grpc::Status::OK;
     }
 
@@ -51,32 +53,32 @@ namespace gRPCTest::Core::Services
         ::gRPCTest::Protos::Services::FetchInvoiceByIdResponse* response)
     {
       const std::uint64_t id = request->invoice_id();
-      gRPCTest::Logger::Log(stdout, "fetching invoice with id `%lu'...", id);
 
-      for (const auto &invoice : m_invoices_data_store)
+      ::gRPCTest::Logger::Log(stdout, "fetching invoice with id `%lu'...", id);
+
+      auto repository = m_database.Repository<::gRPCTest::Core::Models::Invoice>();
+
+      const auto query = repository->Find(
+        [&id](const ::gRPCTest::Core::Models::Invoice &invoice)
       {
-        if (invoice.id == id)
-        {
-          auto new_invoice = new gRPCTest::Protos::Models::Invoice;
-          new_invoice->set_id(invoice.id);
-          new_invoice->set_name(invoice.name);
-          new_invoice->set_address(invoice.address);
+        return invoice.id == id;
+      });
 
-          auto new_client = new gRPCTest::Protos::Models::Client;
-          new_client->set_id(invoice.client.id);
-          new_client->set_name(invoice.client.name);
-          new_client->set_phone(invoice.client.phone);
-          new_client->set_email(invoice.client.email);
-          new_invoice->set_allocated_client(new_client);
+      if (query)
+      {
+        const auto invoice = query.value();
+        auto new_invoice = new gRPCTest::Protos::Models::Invoice;
+        new_invoice->set_id(invoice.id);
+        new_invoice->set_name(invoice.name);
+        new_invoice->set_address(invoice.address);
+        new_invoice->set_client_id(invoice.client_id);
+        auto at = new google::protobuf::Timestamp;
+        const auto epoch = invoice.created_at.time_since_epoch();
+        at->set_seconds(std::chrono::duration_cast<std::chrono::seconds>(epoch).count());
+        new_invoice->set_allocated_created_at(at);
 
-          auto at = new google::protobuf::Timestamp;
-          const auto epoch = invoice.created_at.time_since_epoch();
-          at->set_seconds(std::chrono::duration_cast<std::chrono::seconds>(epoch).count());
-          new_invoice->set_allocated_created_at(at);
-
-          response->set_allocated_invoice(new_invoice);
-          return ::grpc::Status::OK;
-        }
+        response->set_allocated_invoice(new_invoice);
+        return ::grpc::Status::OK;
       }
 
       return ::grpc::Status(::grpc::StatusCode::NOT_FOUND, "Invoice was not found.");
@@ -86,6 +88,34 @@ namespace gRPCTest::Core::Services
       [[maybe_unused]] const ::gRPCTest::Protos::Services::FetchInvoiceByDateRequest* request,
         [[maybe_unused]] ::gRPCTest::Protos::Services::FetchInvoiceByDateResponse* response)
     {
+      ::gRPCTest::Logger::Log(stdout, "fetching invoice by date...");
+
+      auto repository = m_database.Repository<::gRPCTest::Core::Models::Invoice>();
+
+      const google::protobuf::Timestamp requested_date = request->date();
+
+      const auto matches = repository->SelectWhere(
+        [&requested_date](const ::gRPCTest::Core::Models::Invoice &invoice)
+      {
+        const auto epoch = invoice.created_at.time_since_epoch();
+        const auto seconds = std::chrono::duration_cast<std::chrono::seconds>(epoch);
+        return seconds.count() == requested_date.seconds();
+      });
+
+      for (const auto &invoice : matches)
+      {
+        auto grpc_invoice = response->add_invoices();
+
+        grpc_invoice->set_id(invoice.id);
+        grpc_invoice->set_name(invoice.name);
+        grpc_invoice->set_address(invoice.address);
+        grpc_invoice->set_client_id(invoice.client_id);
+        auto at = new google::protobuf::Timestamp;
+        const auto epoch = invoice.created_at.time_since_epoch();
+        at->set_seconds(std::chrono::duration_cast<std::chrono::seconds>(epoch).count());
+        grpc_invoice->set_allocated_created_at(at);
+      }
+
       return ::grpc::Status::OK;
     }
 
@@ -100,24 +130,18 @@ namespace gRPCTest::Core::Services
       [[maybe_unused]] const ::google::protobuf::Empty* request,
         ::gRPCTest::Protos::Services::FetchInvoicesResponse* response)
     {
-      gRPCTest::Logger::Log(stdout, "fetching invoices...");
+      using namespace ::gRPCTest::Core;
+      ::gRPCTest::Logger::Log(stdout, "fetching invoices...");
 
-      for (const auto &invoice : m_invoices_data_store)
+      for (const auto &invoice
+        : m_database.Repository<Models::Invoice>()->SelectAll())
       {
         auto grpc_invoice = response->add_invoices();
 
         grpc_invoice->set_id(invoice.id);
         grpc_invoice->set_name(invoice.name);
         grpc_invoice->set_address(invoice.address);
-
-        auto new_client = new gRPCTest::Protos::Models::Client;
-        new_client->set_id(invoice.client.id);
-        new_client->set_name(invoice.client.name);
-        new_client->set_phone(invoice.client.phone);
-        new_client->set_email(invoice.client.email);
-
-        grpc_invoice->set_allocated_client(new_client);
-
+        grpc_invoice->set_client_id(invoice.client_id);
         auto at = new google::protobuf::Timestamp;
         const auto epoch = invoice.created_at.time_since_epoch();
         at->set_seconds(std::chrono::duration_cast<std::chrono::seconds>(epoch).count());
@@ -128,7 +152,7 @@ namespace gRPCTest::Core::Services
     }
 
   private:
-    std::deque<::gRPCTest::Core::Models::Invoice> m_invoices_data_store;
+    ::gRPCTest::Core::Database &m_database;
   };
 }
 

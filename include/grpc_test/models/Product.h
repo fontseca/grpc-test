@@ -23,11 +23,7 @@ namespace gRPCTest::Core
   class RepositoryTraits<Models::Product>
   {
   public:
-    static constexpr auto RepositoryName() noexcept
-      -> const char *
-    {
-      return "Product";
-    }
+    static constexpr const char *RepositoryName = "Product";
   };
 }
 

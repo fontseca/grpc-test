@@ -214,13 +214,13 @@ class InvoiceByIdRequest final :
   enum : int {
     kInvoiceIdFieldNumber = 1,
   };
-  // int64 invoice_id = 1;
+  // uint64 invoice_id = 1;
   void clear_invoice_id();
-  int64_t invoice_id() const;
-  void set_invoice_id(int64_t value);
+  uint64_t invoice_id() const;
+  void set_invoice_id(uint64_t value);
   private:
-  int64_t _internal_invoice_id() const;
-  void _internal_set_invoice_id(int64_t value);
+  uint64_t _internal_invoice_id() const;
+  void _internal_set_invoice_id(uint64_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:gRPCTest.Protos.Services.InvoiceByIdRequest)
@@ -231,7 +231,7 @@ class InvoiceByIdRequest final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    int64_t invoice_id_;
+    uint64_t invoice_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -871,26 +871,26 @@ class FetchInvoiceByDateResponse final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kInvoiceFieldNumber = 1,
+    kInvoicesFieldNumber = 1,
     kErrorStatusFieldNumber = 2,
   };
-  // .gRPCTest.Protos.Models.Invoice invoice = 1;
-  bool has_invoice() const;
+  // repeated .gRPCTest.Protos.Models.Invoice invoices = 1;
+  int invoices_size() const;
   private:
-  bool _internal_has_invoice() const;
+  int _internal_invoices_size() const;
   public:
-  void clear_invoice();
-  const ::gRPCTest::Protos::Models::Invoice& invoice() const;
-  PROTOBUF_NODISCARD ::gRPCTest::Protos::Models::Invoice* release_invoice();
-  ::gRPCTest::Protos::Models::Invoice* mutable_invoice();
-  void set_allocated_invoice(::gRPCTest::Protos::Models::Invoice* invoice);
+  void clear_invoices();
+  ::gRPCTest::Protos::Models::Invoice* mutable_invoices(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Invoice >*
+      mutable_invoices();
   private:
-  const ::gRPCTest::Protos::Models::Invoice& _internal_invoice() const;
-  ::gRPCTest::Protos::Models::Invoice* _internal_mutable_invoice();
+  const ::gRPCTest::Protos::Models::Invoice& _internal_invoices(int index) const;
+  ::gRPCTest::Protos::Models::Invoice* _internal_add_invoices();
   public:
-  void unsafe_arena_set_allocated_invoice(
-      ::gRPCTest::Protos::Models::Invoice* invoice);
-  ::gRPCTest::Protos::Models::Invoice* unsafe_arena_release_invoice();
+  const ::gRPCTest::Protos::Models::Invoice& invoices(int index) const;
+  ::gRPCTest::Protos::Models::Invoice* add_invoices();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Invoice >&
+      invoices() const;
 
   // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
   bool has_error_status() const;
@@ -918,7 +918,7 @@ class FetchInvoiceByDateResponse final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::gRPCTest::Protos::Models::Invoice* invoice_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Invoice > invoices_;
     ::gRPCTest::Protos::Services::ServiceStatus* error_status_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -1048,10 +1048,11 @@ class FetchInvoiceDetailsResponse final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kInvoiceDetailsFieldNumber = 1,
-    kErrorStatusFieldNumber = 2,
+    kInvoiceDetailsFieldNumber = 2,
+    kErrorStatusFieldNumber = 3,
+    kInvoiceIdFieldNumber = 1,
   };
-  // .gRPCTest.Protos.Models.InvoiceDetails invoice_details = 1;
+  // .gRPCTest.Protos.Models.InvoiceDetails invoice_details = 2;
   bool has_invoice_details() const;
   private:
   bool _internal_has_invoice_details() const;
@@ -1069,7 +1070,7 @@ class FetchInvoiceDetailsResponse final :
       ::gRPCTest::Protos::Models::InvoiceDetails* invoice_details);
   ::gRPCTest::Protos::Models::InvoiceDetails* unsafe_arena_release_invoice_details();
 
-  // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
+  // .gRPCTest.Protos.Services.ServiceStatus error_status = 3;
   bool has_error_status() const;
   private:
   bool _internal_has_error_status() const;
@@ -1087,6 +1088,15 @@ class FetchInvoiceDetailsResponse final :
       ::gRPCTest::Protos::Services::ServiceStatus* error_status);
   ::gRPCTest::Protos::Services::ServiceStatus* unsafe_arena_release_error_status();
 
+  // uint64 invoice_id = 1;
+  void clear_invoice_id();
+  uint64_t invoice_id() const;
+  void set_invoice_id(uint64_t value);
+  private:
+  uint64_t _internal_invoice_id() const;
+  void _internal_set_invoice_id(uint64_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:gRPCTest.Protos.Services.FetchInvoiceDetailsResponse)
  private:
   class _Internal;
@@ -1097,6 +1107,7 @@ class FetchInvoiceDetailsResponse final :
   struct Impl_ {
     ::gRPCTest::Protos::Models::InvoiceDetails* invoice_details_;
     ::gRPCTest::Protos::Services::ServiceStatus* error_status_;
+    uint64_t invoice_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -1290,22 +1301,22 @@ class FetchInvoicesResponse final :
 #endif  // __GNUC__
 // InvoiceByIdRequest
 
-// int64 invoice_id = 1;
+// uint64 invoice_id = 1;
 inline void InvoiceByIdRequest::clear_invoice_id() {
-  _impl_.invoice_id_ = int64_t{0};
+  _impl_.invoice_id_ = uint64_t{0u};
 }
-inline int64_t InvoiceByIdRequest::_internal_invoice_id() const {
+inline uint64_t InvoiceByIdRequest::_internal_invoice_id() const {
   return _impl_.invoice_id_;
 }
-inline int64_t InvoiceByIdRequest::invoice_id() const {
+inline uint64_t InvoiceByIdRequest::invoice_id() const {
   // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.InvoiceByIdRequest.invoice_id)
   return _internal_invoice_id();
 }
-inline void InvoiceByIdRequest::_internal_set_invoice_id(int64_t value) {
+inline void InvoiceByIdRequest::_internal_set_invoice_id(uint64_t value) {
   
   _impl_.invoice_id_ = value;
 }
-inline void InvoiceByIdRequest::set_invoice_id(int64_t value) {
+inline void InvoiceByIdRequest::set_invoice_id(uint64_t value) {
   _internal_set_invoice_id(value);
   // @@protoc_insertion_point(field_set:gRPCTest.Protos.Services.InvoiceByIdRequest.invoice_id)
 }
@@ -1751,89 +1762,41 @@ inline void FetchInvoiceByIdResponse::set_allocated_error_status(::gRPCTest::Pro
 
 // FetchInvoiceByDateResponse
 
-// .gRPCTest.Protos.Models.Invoice invoice = 1;
-inline bool FetchInvoiceByDateResponse::_internal_has_invoice() const {
-  return this != internal_default_instance() && _impl_.invoice_ != nullptr;
+// repeated .gRPCTest.Protos.Models.Invoice invoices = 1;
+inline int FetchInvoiceByDateResponse::_internal_invoices_size() const {
+  return _impl_.invoices_.size();
 }
-inline bool FetchInvoiceByDateResponse::has_invoice() const {
-  return _internal_has_invoice();
+inline int FetchInvoiceByDateResponse::invoices_size() const {
+  return _internal_invoices_size();
 }
-inline const ::gRPCTest::Protos::Models::Invoice& FetchInvoiceByDateResponse::_internal_invoice() const {
-  const ::gRPCTest::Protos::Models::Invoice* p = _impl_.invoice_;
-  return p != nullptr ? *p : reinterpret_cast<const ::gRPCTest::Protos::Models::Invoice&>(
-      ::gRPCTest::Protos::Models::_Invoice_default_instance_);
+inline ::gRPCTest::Protos::Models::Invoice* FetchInvoiceByDateResponse::mutable_invoices(int index) {
+  // @@protoc_insertion_point(field_mutable:gRPCTest.Protos.Services.FetchInvoiceByDateResponse.invoices)
+  return _impl_.invoices_.Mutable(index);
 }
-inline const ::gRPCTest::Protos::Models::Invoice& FetchInvoiceByDateResponse::invoice() const {
-  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.FetchInvoiceByDateResponse.invoice)
-  return _internal_invoice();
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Invoice >*
+FetchInvoiceByDateResponse::mutable_invoices() {
+  // @@protoc_insertion_point(field_mutable_list:gRPCTest.Protos.Services.FetchInvoiceByDateResponse.invoices)
+  return &_impl_.invoices_;
 }
-inline void FetchInvoiceByDateResponse::unsafe_arena_set_allocated_invoice(
-    ::gRPCTest::Protos::Models::Invoice* invoice) {
-  if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.invoice_);
-  }
-  _impl_.invoice_ = invoice;
-  if (invoice) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:gRPCTest.Protos.Services.FetchInvoiceByDateResponse.invoice)
+inline const ::gRPCTest::Protos::Models::Invoice& FetchInvoiceByDateResponse::_internal_invoices(int index) const {
+  return _impl_.invoices_.Get(index);
 }
-inline ::gRPCTest::Protos::Models::Invoice* FetchInvoiceByDateResponse::release_invoice() {
-  
-  ::gRPCTest::Protos::Models::Invoice* temp = _impl_.invoice_;
-  _impl_.invoice_ = nullptr;
-#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  if (GetArenaForAllocation() == nullptr) { delete old; }
-#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return temp;
+inline const ::gRPCTest::Protos::Models::Invoice& FetchInvoiceByDateResponse::invoices(int index) const {
+  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.FetchInvoiceByDateResponse.invoices)
+  return _internal_invoices(index);
 }
-inline ::gRPCTest::Protos::Models::Invoice* FetchInvoiceByDateResponse::unsafe_arena_release_invoice() {
-  // @@protoc_insertion_point(field_release:gRPCTest.Protos.Services.FetchInvoiceByDateResponse.invoice)
-  
-  ::gRPCTest::Protos::Models::Invoice* temp = _impl_.invoice_;
-  _impl_.invoice_ = nullptr;
-  return temp;
+inline ::gRPCTest::Protos::Models::Invoice* FetchInvoiceByDateResponse::_internal_add_invoices() {
+  return _impl_.invoices_.Add();
 }
-inline ::gRPCTest::Protos::Models::Invoice* FetchInvoiceByDateResponse::_internal_mutable_invoice() {
-  
-  if (_impl_.invoice_ == nullptr) {
-    auto* p = CreateMaybeMessage<::gRPCTest::Protos::Models::Invoice>(GetArenaForAllocation());
-    _impl_.invoice_ = p;
-  }
-  return _impl_.invoice_;
+inline ::gRPCTest::Protos::Models::Invoice* FetchInvoiceByDateResponse::add_invoices() {
+  ::gRPCTest::Protos::Models::Invoice* _add = _internal_add_invoices();
+  // @@protoc_insertion_point(field_add:gRPCTest.Protos.Services.FetchInvoiceByDateResponse.invoices)
+  return _add;
 }
-inline ::gRPCTest::Protos::Models::Invoice* FetchInvoiceByDateResponse::mutable_invoice() {
-  ::gRPCTest::Protos::Models::Invoice* _msg = _internal_mutable_invoice();
-  // @@protoc_insertion_point(field_mutable:gRPCTest.Protos.Services.FetchInvoiceByDateResponse.invoice)
-  return _msg;
-}
-inline void FetchInvoiceByDateResponse::set_allocated_invoice(::gRPCTest::Protos::Models::Invoice* invoice) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.invoice_);
-  }
-  if (invoice) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(invoice));
-    if (message_arena != submessage_arena) {
-      invoice = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, invoice, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  _impl_.invoice_ = invoice;
-  // @@protoc_insertion_point(field_set_allocated:gRPCTest.Protos.Services.FetchInvoiceByDateResponse.invoice)
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::gRPCTest::Protos::Models::Invoice >&
+FetchInvoiceByDateResponse::invoices() const {
+  // @@protoc_insertion_point(field_list:gRPCTest.Protos.Services.FetchInvoiceByDateResponse.invoices)
+  return _impl_.invoices_;
 }
 
 // .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
@@ -1925,7 +1888,27 @@ inline void FetchInvoiceByDateResponse::set_allocated_error_status(::gRPCTest::P
 
 // FetchInvoiceDetailsResponse
 
-// .gRPCTest.Protos.Models.InvoiceDetails invoice_details = 1;
+// uint64 invoice_id = 1;
+inline void FetchInvoiceDetailsResponse::clear_invoice_id() {
+  _impl_.invoice_id_ = uint64_t{0u};
+}
+inline uint64_t FetchInvoiceDetailsResponse::_internal_invoice_id() const {
+  return _impl_.invoice_id_;
+}
+inline uint64_t FetchInvoiceDetailsResponse::invoice_id() const {
+  // @@protoc_insertion_point(field_get:gRPCTest.Protos.Services.FetchInvoiceDetailsResponse.invoice_id)
+  return _internal_invoice_id();
+}
+inline void FetchInvoiceDetailsResponse::_internal_set_invoice_id(uint64_t value) {
+  
+  _impl_.invoice_id_ = value;
+}
+inline void FetchInvoiceDetailsResponse::set_invoice_id(uint64_t value) {
+  _internal_set_invoice_id(value);
+  // @@protoc_insertion_point(field_set:gRPCTest.Protos.Services.FetchInvoiceDetailsResponse.invoice_id)
+}
+
+// .gRPCTest.Protos.Models.InvoiceDetails invoice_details = 2;
 inline bool FetchInvoiceDetailsResponse::_internal_has_invoice_details() const {
   return this != internal_default_instance() && _impl_.invoice_details_ != nullptr;
 }
@@ -2010,7 +1993,7 @@ inline void FetchInvoiceDetailsResponse::set_allocated_invoice_details(::gRPCTes
   // @@protoc_insertion_point(field_set_allocated:gRPCTest.Protos.Services.FetchInvoiceDetailsResponse.invoice_details)
 }
 
-// .gRPCTest.Protos.Services.ServiceStatus error_status = 2;
+// .gRPCTest.Protos.Services.ServiceStatus error_status = 3;
 inline bool FetchInvoiceDetailsResponse::_internal_has_error_status() const {
   return this != internal_default_instance() && _impl_.error_status_ != nullptr;
 }

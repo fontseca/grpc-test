@@ -26,7 +26,7 @@ namespace Models {
 PROTOBUF_CONSTEXPR Product::Product(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.id_)*/int64_t{0}
+  , /*decltype(_impl_.id_)*/uint64_t{0u}
   , /*decltype(_impl_.price_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct ProductDefaultTypeInternal {
@@ -66,7 +66,7 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_models_2fProduct_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\024models/Product.proto\022\026gRPCTest.Protos."
-  "Models\"2\n\007Product\022\n\n\002id\030\001 \001(\003\022\014\n\004name\030\002 "
+  "Models\"2\n\007Product\022\n\n\002id\030\001 \001(\004\022\014\n\004name\030\002 "
   "\001(\t\022\r\n\005price\030\003 \001(\001b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_models_2fProduct_2eproto_once;
@@ -130,7 +130,7 @@ inline void Product::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.name_){}
-    , decltype(_impl_.id_){int64_t{0}}
+    , decltype(_impl_.id_){uint64_t{0u}}
     , decltype(_impl_.price_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -177,7 +177,7 @@ const char* Product::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int64 id = 1;
+      // uint64 id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
           _impl_.id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
@@ -232,10 +232,10 @@ uint8_t* Product::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int64 id = 1;
+  // uint64 id = 1;
   if (this->_internal_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(1, this->_internal_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_id(), target);
   }
 
   // string name = 2;
@@ -281,9 +281,9 @@ size_t Product::ByteSizeLong() const {
         this->_internal_name());
   }
 
-  // int64 id = 1;
+  // uint64 id = 1;
   if (this->_internal_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_id());
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_id());
   }
 
   // double price = 3;

@@ -9,7 +9,8 @@ namespace gRPCTest::Core::Models
 {
   struct InvoiceDetails
   {
-    Product product;
+    std::uint64_t id;
+    std::uint64_t product_id;
     double discount;
     std::int32_t amount;
     double total;
@@ -25,11 +26,7 @@ namespace gRPCTest::Core
   class RepositoryTraits<Models::InvoiceDetails>
   {
   public:
-    static constexpr auto RepositoryName() noexcept
-      -> const char *
-    {
-      return "InvoiceDetails";
-    }
+    static constexpr const char *RepositoryName = "InvoiceDetails";
   };
 }
 

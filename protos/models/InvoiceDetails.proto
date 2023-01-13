@@ -2,11 +2,9 @@ syntax = "proto3";
 
 package gRPCTest.Protos.Models;
 
-import "models/Product.proto";
-
 message InvoiceDetails
 {
-  Product product = 1;
+  uint64 product_id = 1;
   double discount = 2;
   int32 amount = 3;
   double total = 4;

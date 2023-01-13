@@ -10,7 +10,7 @@ import "common/ServiceStatus.proto";
 
 message ProductByIdRequest
 {
-  int64 product_id = 1;
+  uint64 product_id = 1;
 }
 
 message ProductPriceRequest

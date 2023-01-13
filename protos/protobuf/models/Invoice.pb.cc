@@ -27,9 +27,9 @@ PROTOBUF_CONSTEXPR Invoice::Invoice(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.name_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.address_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.client_)*/nullptr
   , /*decltype(_impl_.created_at_)*/nullptr
-  , /*decltype(_impl_.id_)*/int64_t{0}
+  , /*decltype(_impl_.id_)*/uint64_t{0u}
+  , /*decltype(_impl_.client_id_)*/uint64_t{0u}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct InvoiceDefaultTypeInternal {
   PROTOBUF_CONSTEXPR InvoiceDefaultTypeInternal()
@@ -55,9 +55,9 @@ const uint32_t TableStruct_models_2fInvoice_2eproto::offsets[] PROTOBUF_SECTION_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Models::Invoice, _impl_.id_),
+  PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Models::Invoice, _impl_.client_id_),
   PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Models::Invoice, _impl_.name_),
   PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Models::Invoice, _impl_.address_),
-  PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Models::Invoice, _impl_.client_),
   PROTOBUF_FIELD_OFFSET(::gRPCTest::Protos::Models::Invoice, _impl_.created_at_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -70,22 +70,20 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_models_2fInvoice_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\024models/Invoice.proto\022\026gRPCTest.Protos."
-  "Models\032\037google/protobuf/timestamp.proto\032"
-  "\023models/Client.proto\"\224\001\n\007Invoice\022\n\n\002id\030\001"
-  " \001(\003\022\014\n\004name\030\002 \001(\t\022\017\n\007address\030\003 \001(\t\022.\n\006c"
-  "lient\030\004 \001(\0132\036.gRPCTest.Protos.Models.Cli"
-  "ent\022.\n\ncreated_at\030\005 \001(\0132\032.google.protobu"
-  "f.Timestampb\006proto3"
+  "Models\032\037google/protobuf/timestamp.proto\""
+  "w\n\007Invoice\022\n\n\002id\030\001 \001(\004\022\021\n\tclient_id\030\002 \001("
+  "\004\022\014\n\004name\030\003 \001(\t\022\017\n\007address\030\004 \001(\t\022.\n\ncrea"
+  "ted_at\030\005 \001(\0132\032.google.protobuf.Timestamp"
+  "b\006proto3"
   ;
-static const ::_pbi::DescriptorTable* const descriptor_table_models_2fInvoice_2eproto_deps[2] = {
+static const ::_pbi::DescriptorTable* const descriptor_table_models_2fInvoice_2eproto_deps[1] = {
   &::descriptor_table_google_2fprotobuf_2ftimestamp_2eproto,
-  &::descriptor_table_models_2fClient_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_models_2fInvoice_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_models_2fInvoice_2eproto = {
-    false, false, 259, descriptor_table_protodef_models_2fInvoice_2eproto,
+    false, false, 208, descriptor_table_protodef_models_2fInvoice_2eproto,
     "models/Invoice.proto",
-    &descriptor_table_models_2fInvoice_2eproto_once, descriptor_table_models_2fInvoice_2eproto_deps, 2, 1,
+    &descriptor_table_models_2fInvoice_2eproto_once, descriptor_table_models_2fInvoice_2eproto_deps, 1, 1,
     schemas, file_default_instances, TableStruct_models_2fInvoice_2eproto::offsets,
     file_level_metadata_models_2fInvoice_2eproto, file_level_enum_descriptors_models_2fInvoice_2eproto,
     file_level_service_descriptors_models_2fInvoice_2eproto,
@@ -104,23 +102,12 @@ namespace Models {
 
 class Invoice::_Internal {
  public:
-  static const ::gRPCTest::Protos::Models::Client& client(const Invoice* msg);
   static const ::PROTOBUF_NAMESPACE_ID::Timestamp& created_at(const Invoice* msg);
 };
 
-const ::gRPCTest::Protos::Models::Client&
-Invoice::_Internal::client(const Invoice* msg) {
-  return *msg->_impl_.client_;
-}
 const ::PROTOBUF_NAMESPACE_ID::Timestamp&
 Invoice::_Internal::created_at(const Invoice* msg) {
   return *msg->_impl_.created_at_;
-}
-void Invoice::clear_client() {
-  if (GetArenaForAllocation() == nullptr && _impl_.client_ != nullptr) {
-    delete _impl_.client_;
-  }
-  _impl_.client_ = nullptr;
 }
 void Invoice::clear_created_at() {
   if (GetArenaForAllocation() == nullptr && _impl_.created_at_ != nullptr) {
@@ -140,9 +127,9 @@ Invoice::Invoice(const Invoice& from)
   new (&_impl_) Impl_{
       decltype(_impl_.name_){}
     , decltype(_impl_.address_){}
-    , decltype(_impl_.client_){nullptr}
     , decltype(_impl_.created_at_){nullptr}
     , decltype(_impl_.id_){}
+    , decltype(_impl_.client_id_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -162,13 +149,12 @@ Invoice::Invoice(const Invoice& from)
     _this->_impl_.address_.Set(from._internal_address(), 
       _this->GetArenaForAllocation());
   }
-  if (from._internal_has_client()) {
-    _this->_impl_.client_ = new ::gRPCTest::Protos::Models::Client(*from._impl_.client_);
-  }
   if (from._internal_has_created_at()) {
     _this->_impl_.created_at_ = new ::PROTOBUF_NAMESPACE_ID::Timestamp(*from._impl_.created_at_);
   }
-  _this->_impl_.id_ = from._impl_.id_;
+  ::memcpy(&_impl_.id_, &from._impl_.id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.client_id_) -
+    reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.client_id_));
   // @@protoc_insertion_point(copy_constructor:gRPCTest.Protos.Models.Invoice)
 }
 
@@ -179,9 +165,9 @@ inline void Invoice::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_.name_){}
     , decltype(_impl_.address_){}
-    , decltype(_impl_.client_){nullptr}
     , decltype(_impl_.created_at_){nullptr}
-    , decltype(_impl_.id_){int64_t{0}}
+    , decltype(_impl_.id_){uint64_t{0u}}
+    , decltype(_impl_.client_id_){uint64_t{0u}}
     , /*decltype(_impl_._cached_size_)*/{}
   };
   _impl_.name_.InitDefault();
@@ -207,7 +193,6 @@ inline void Invoice::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.name_.Destroy();
   _impl_.address_.Destroy();
-  if (this != internal_default_instance()) delete _impl_.client_;
   if (this != internal_default_instance()) delete _impl_.created_at_;
 }
 
@@ -223,15 +208,13 @@ void Invoice::Clear() {
 
   _impl_.name_.ClearToEmpty();
   _impl_.address_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && _impl_.client_ != nullptr) {
-    delete _impl_.client_;
-  }
-  _impl_.client_ = nullptr;
   if (GetArenaForAllocation() == nullptr && _impl_.created_at_ != nullptr) {
     delete _impl_.created_at_;
   }
   _impl_.created_at_ = nullptr;
-  _impl_.id_ = int64_t{0};
+  ::memset(&_impl_.id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&_impl_.client_id_) -
+      reinterpret_cast<char*>(&_impl_.id_)) + sizeof(_impl_.client_id_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -241,7 +224,7 @@ const char* Invoice::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // int64 id = 1;
+      // uint64 id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
           _impl_.id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
@@ -249,9 +232,17 @@ const char* Invoice::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
         } else
           goto handle_unusual;
         continue;
-      // string name = 2;
+      // uint64 client_id = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          _impl_.client_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string name = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           auto str = _internal_mutable_name();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
@@ -259,21 +250,13 @@ const char* Invoice::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
         } else
           goto handle_unusual;
         continue;
-      // string address = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+      // string address = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
           auto str = _internal_mutable_address();
           ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
           CHK_(::_pbi::VerifyUTF8(str, "gRPCTest.Protos.Models.Invoice.address"));
-        } else
-          goto handle_unusual;
-        continue;
-      // .gRPCTest.Protos.Models.Client client = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          ptr = ctx->ParseMessage(_internal_mutable_client(), ptr);
-          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
@@ -314,37 +297,36 @@ uint8_t* Invoice::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // int64 id = 1;
+  // uint64 id = 1;
   if (this->_internal_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt64ToArray(1, this->_internal_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_id(), target);
   }
 
-  // string name = 2;
+  // uint64 client_id = 2;
+  if (this->_internal_client_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(2, this->_internal_client_id(), target);
+  }
+
+  // string name = 3;
   if (!this->_internal_name().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "gRPCTest.Protos.Models.Invoice.name");
     target = stream->WriteStringMaybeAliased(
-        2, this->_internal_name(), target);
+        3, this->_internal_name(), target);
   }
 
-  // string address = 3;
+  // string address = 4;
   if (!this->_internal_address().empty()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_address().data(), static_cast<int>(this->_internal_address().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "gRPCTest.Protos.Models.Invoice.address");
     target = stream->WriteStringMaybeAliased(
-        3, this->_internal_address(), target);
-  }
-
-  // .gRPCTest.Protos.Models.Client client = 4;
-  if (this->_internal_has_client()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(4, _Internal::client(this),
-        _Internal::client(this).GetCachedSize(), target, stream);
+        4, this->_internal_address(), target);
   }
 
   // .google.protobuf.Timestamp created_at = 5;
@@ -370,25 +352,18 @@ size_t Invoice::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string name = 2;
+  // string name = 3;
   if (!this->_internal_name().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_name());
   }
 
-  // string address = 3;
+  // string address = 4;
   if (!this->_internal_address().empty()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_address());
-  }
-
-  // .gRPCTest.Protos.Models.Client client = 4;
-  if (this->_internal_has_client()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.client_);
   }
 
   // .google.protobuf.Timestamp created_at = 5;
@@ -398,9 +373,14 @@ size_t Invoice::ByteSizeLong() const {
         *_impl_.created_at_);
   }
 
-  // int64 id = 1;
+  // uint64 id = 1;
   if (this->_internal_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int64SizePlusOne(this->_internal_id());
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_id());
+  }
+
+  // uint64 client_id = 2;
+  if (this->_internal_client_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_client_id());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -427,16 +407,15 @@ void Invoice::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOB
   if (!from._internal_address().empty()) {
     _this->_internal_set_address(from._internal_address());
   }
-  if (from._internal_has_client()) {
-    _this->_internal_mutable_client()->::gRPCTest::Protos::Models::Client::MergeFrom(
-        from._internal_client());
-  }
   if (from._internal_has_created_at()) {
     _this->_internal_mutable_created_at()->::PROTOBUF_NAMESPACE_ID::Timestamp::MergeFrom(
         from._internal_created_at());
   }
   if (from._internal_id() != 0) {
     _this->_internal_set_id(from._internal_id());
+  }
+  if (from._internal_client_id() != 0) {
+    _this->_internal_set_client_id(from._internal_client_id());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -466,11 +445,11 @@ void Invoice::InternalSwap(Invoice* other) {
       &other->_impl_.address_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Invoice, _impl_.id_)
-      + sizeof(Invoice::_impl_.id_)
-      - PROTOBUF_FIELD_OFFSET(Invoice, _impl_.client_)>(
-          reinterpret_cast<char*>(&_impl_.client_),
-          reinterpret_cast<char*>(&other->_impl_.client_));
+      PROTOBUF_FIELD_OFFSET(Invoice, _impl_.client_id_)
+      + sizeof(Invoice::_impl_.client_id_)
+      - PROTOBUF_FIELD_OFFSET(Invoice, _impl_.created_at_)>(
+          reinterpret_cast<char*>(&_impl_.created_at_),
+          reinterpret_cast<char*>(&other->_impl_.created_at_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Invoice::GetMetadata() const {
